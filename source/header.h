@@ -1,4 +1,3 @@
-
 #include <stdio.h>
 #include <math.h>
 
@@ -85,22 +84,31 @@ holder held_mtree[GD];
 int held_pnode_sel[GD];
 int held_address[GD];
 
+//buddy allocations
+int alloc(int request_size);
+void de_alloc(int saddr,int reqsize);
+scope locate_block(scope input);
+drone mark_allocation_down(drone input);
+mupdrone mark_allocation_up(mupdrone input);
+freeprobe get_free_info(int saddr,int reqsize);
+
+//hw functions
 int bram_read(int address);
 void bram_write(int address, int content);
 void bram_init(int length);
 void vector_init(int length);
 int vector_read(int address);
 void vector_write(int address, int content);
-void tree_map(int *tree_block_i,word tree_block);
-scope locate_block(scope input);
 void check_alvector(void);
-drone mark_allocation_down(drone input);
-mupdrone mark_allocation_up(mupdrone input);
 void update_group(int *mtree,int alvec);
+
+//sw functions
+void tree_map(int *tree_block_i,word tree_block);
 word tree_mapback(int *mtree);
-int alloc(int request_size);
-freeprobe get_free_info(int saddr,int reqsize);
-void de_alloc(int saddr,int reqsize);
 void copy_mtree(int *input, holder *output, int index);
 void ptree(int address);
 void pvec(int address);
+void pgroup(int *input);
+
+
+

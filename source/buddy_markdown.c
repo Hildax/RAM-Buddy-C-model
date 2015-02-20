@@ -253,7 +253,7 @@ drone mark_allocation_down(drone input){
 	
 	//printf("need mark UP?:%d\n",output.flag_markup);
 
-	printf("or %d,and %d\n", output.node_or,output.node_and);
+	//printf("or %d,and %d\n", output.node_or,output.node_and);
 	
 	return output;
 }

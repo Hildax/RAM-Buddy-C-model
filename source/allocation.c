@@ -73,10 +73,8 @@ int alloc(int request_size){
 		while(mup_drone.done == 0){
 			mup_drone = mark_allocation_up(mup_drone);
 		}
-		printf("or %d,and %d\n", st_drone.node_or,st_drone.node_and);
-		printf("or %d,and %d\n", working_drone.node_or,working_drone.node_and);
-		printf("allocation finished, starting address = %d \n\n",located_scope.saddr);
 	}
+	printf("allocation finished, starting address = %d \n\n",located_scope.saddr);
 
 	return located_scope.saddr;
 

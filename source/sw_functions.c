@@ -82,3 +82,23 @@ void pvec(int address){
 
 	printf("\n\n");
 }
+
+//printf local group(mapped)
+void pgroup(int *input){
+
+	int mtree[32];
+	int i;
+	printf("group has content: \n");
+	
+	for(i = 0; i<30; i++){
+		printf("%d",input[i]);
+		if(i%2 != 0){
+			printf(" ");
+		}	
+		if(i == 1 || i == 5 || i == 13 || i ==29){
+			printf(" \n");
+		}
+	}
+
+	printf("\n");
+}

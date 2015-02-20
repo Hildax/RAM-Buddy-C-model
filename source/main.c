@@ -1,5 +1,9 @@
-// C model of a hardware RAM-based Buddy allocator
-// created by Hilda Xue, last edited 19 Feb 2015
+/*
+ C model of a hardware RAM-based Buddy allocator
+ created by Hilda Xue, last edited 19 Feb 2015
+ to compile:
+ gcc -o main main.c hw_functions.c sw_functions.c header.h allocation.c buddy_markdown.c buddy_markup.c buddy_search.c de_allocation.c free_info.c -lm
+*/
 #include "header.h"
 
 int main()
@@ -33,12 +37,19 @@ int main()
 	
 	
 	saddr2= alloc(32);
+	ptree(0);
+	ptree(1);
+	ptree(10);
 	
 	de_alloc(saddr1,400);
-	
+    ptree(0);
+	ptree(1);
+	ptree(10);
 	
 	saddr3= alloc(200);
-	
+	ptree(0);
+	ptree(1);
+	ptree(10);
 
 	
 	return 0;
