@@ -32,12 +32,18 @@ int main()
 	saddr6 = alloc(2);
 	*/
 	
-	for(i = 0;i<17;i++){
+	for(i = 0;i<20;i++){
 		printf("allocation %d\n",i);
 		saddr1 = alloc(15);
-		ptree(0);
-		ptree(1);
-		ptree(2);
 	}
+	
+	ptree(2);
+	ptree(18);
+	de_alloc(288,15);
+	ptree(2);
+	ptree(18);
+	saddr1 = alloc(15);
+	
+	
 	return 0;
 }

@@ -16,7 +16,7 @@ drone mark_allocation_down(drone input){
 	int n_f;
 	int shift,offset;
 	
-	printf("[Node Mark] Group (%d,%d) top node size = %d, size left to be marked = %d \n",input.coo.verti,input.coo.horiz,topsize, input.request_size);
+	printf("[Node Mark] Group (%d,%d) top node size = %d, size left to be marked = %d \n",input.coo.verti,input.coo.horiz,topsize, reqsize);
 	printf("If using allocation vector [** %d **]\n",input.alvec);
 	
 	//1.calculate ram address 2.read block 3.map block
@@ -68,6 +68,8 @@ drone mark_allocation_down(drone input){
 	
 	
 	offset = shift/2 + n_f;
+			printf("input.pnode_sel = %d\n",input.pnode_sel);
+			printf("reqsize = %d shift = %d (1)\n",reqsize,shift);
 	
 	if(input.alvec == 1){
 		if(input.original_reqsize == 1 && input.saddr % 2 != 0){		
@@ -123,10 +125,13 @@ drone mark_allocation_down(drone input){
 			mtree[shift + 4*n_f + 6 + 1] = flag_alloc;
 		}
 		offset = shift/4 + n_f;
+		printf("n_f = %d, shift = %d, utput.request_size = %d\n",n_f,shift,output.request_size);
 		
 	}else{
-		//printf("**in case : topsize = not 16 or 4\n");
+		printf("**in case : topsize = not 16 or 4\n");
+		printf("reqsize = %d shift = %d (1)\n",reqsize,shift);
 		n_f = floor(reqsize /(topsize/8));
+		printf("reqsize = %d shift = %d (2)\n",reqsize,shift);
 		/*
 		if(flag_alloc == 1){
 			shift = input.pnode_sel * 2;
@@ -134,15 +139,20 @@ drone mark_allocation_down(drone input){
 			shift = 0;
 		}
 		*/
-		printf("n_f = %d\n",n_f);
+		printf("reqsize = %d shift = %d (3)\n",reqsize,shift);
 		for(i =shift; i <shift + 2*n_f; i ++){
+			printf("i = %d\n",i);
 			mtree[i + 14] = flag_alloc;
 		}
+		printf("reqsize = %d shift = %d (4)\n",reqsize,shift);
 		output.request_size = reqsize - n_f * (topsize/8);
+		printf("reqsize = %d shift = %d (5)\n",reqsize,shift);
 		if(output.request_size != 0){
 			mtree[shift + 2*n_f + 14] = 1; // don't really care in case of free
 		}
 		offset = shift/2 + n_f;
+				printf("reqsize %d, topsize %d,n_f = %d, shift = %d, utput.request_size = %d\n",reqsize,topsize,n_f,shift,output.request_size);
+		
 	}
 	
 	
@@ -177,6 +187,7 @@ drone mark_allocation_down(drone input){
 		//de-allocation, write the previous tree. after the write, update the hold regs
 		
 		if(output.request_size == 0){
+			printf("downward marking finished \n");
 			
 			//there is a case of alvec == 1
 			if(input.alvec == 0){
@@ -248,12 +259,14 @@ drone mark_allocation_down(drone input){
 	if(input.request_size == input.original_reqsize){
 		
 		if (mtree[0] != mtree_copy[0] || mtree[1] != mtree_copy[1] || (input.original_reqsize == 1 && flag_use_alvector == 1)){
-			printf("Downward marking finished, upward marking began.  \n");
+			//printf("Downward marking finished, upward marking began.  \n");
 			//if in top group, no need to mark up
 			if(input.coo.verti == 0){
 				output.flag_markup = 0;
+				printf("upward marking is NOT required (a)\n");
 			}else{
 				output.flag_markup = 1;
+				printf("upward marking is required \n");
 			}
 			
 			output.node_or = mtree[0];
@@ -278,7 +291,7 @@ drone mark_allocation_down(drone input){
 
 		}else{
 			output.flag_markup = 0;
-			printf("Downward marking finished, upward marking is not required. \n");
+			printf("upward marking is NOT required (b)\n");
 		}
 	}
 	else{
@@ -296,7 +309,7 @@ drone mark_allocation_down(drone input){
 	//pgroup(mtree_copy);
 	//pgroup(mtree);
 	
-	
+	printf("size left = %d\n",output.request_size);
 
 	return output;
 }

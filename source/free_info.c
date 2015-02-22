@@ -27,12 +27,20 @@ freeprobe get_free_info(int saddr,int reqsize){
 	horiz = floor(saddr/topsize);
 	
 	// pnode_sel 
-	pnode_sel = (saddr % topsize);
+	//pnode_sel = (saddr % (topsize/8));//do i need to devide by 8 or not..?
+	//pnode_sel = horiz % 8;
+	//pnode_sel = saddr % 8;
+	pnode_sel = floor((saddr % topsize) / (topsize/8));
+	
+	printf("horiz = %d \n",horiz);
+	
+	printf("pnode_Sel got = %d\n",pnode_sel);
 	
 	output.coo.verti = verti;
 	output.coo.horiz = horiz;
 	output.pnode_sel = pnode_sel;
 	output.row_base = row_base;
 	
+	//---ALVEC CASE?
 	return output;
 };

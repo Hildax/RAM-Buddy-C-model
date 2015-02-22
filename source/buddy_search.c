@@ -16,9 +16,8 @@ scope locate_block(scope input){
 	int local_sel,local_bit_sel;  
 
 	topsize = NUM_MBLOCK/pow(8,input.coo.verti);
-	printf("[Group Search] ");
-	printf("New Group (%d,%d) top node size = %d \n",input.coo.verti,input.coo.horiz,topsize);
-	printf("input saddr = %d \n",input.saddr);
+	printf("[Search] ");
+	printf("In (%d,%d) t_size = %d ",input.coo.verti,input.coo.horiz,topsize);
 
 	reqsize = input.request_size;
 	output.request_size = input.request_size;
@@ -78,7 +77,6 @@ scope locate_block(scope input){
 			if(topsize/16 == 1 && flag_use_alvector == 1){
 				output.alvec = 1; 
 			}      
-			printf("output.saddr %d\n",output.saddr);
 			//-----end allocation vector
 		}else{
 			if(input.coo.verti != 0){
@@ -91,7 +89,6 @@ scope locate_block(scope input){
 				output.saddr = input.saddr - output.pnode_sel_phy * topsize;
 				
 				printf("didn't find allocatable node, going up \n");
-				printf("input sel, output sel [%d,%d]\n",input.pnode_sel_phy,output.pnode_sel_phy);
 
 			}else{
 				printf("allocation failed \n");
@@ -206,8 +203,7 @@ scope locate_block(scope input){
 				output.pnode_sel_phy = local_bit_sel;
 
 			}
-			printf("output.saddr %d\n",output.saddr);
-			
+		
 		}else{
 			if(input.coo.verti != 0){
 
