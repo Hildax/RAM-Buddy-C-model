@@ -73,14 +73,11 @@ scope locate_block(scope input){
 			output.coo.verti = input.coo.verti + 1;
 			output.coo.horiz = input.coo.horiz * 8 + output.pnode_sel;
 			output.saddr = input.saddr + output.pnode_sel * (topsize/8);
-			//------allocation vector
 			if(topsize/16 == 1 && flag_use_alvector == 1){
 				output.alvec = 1; 
 			}      
-			//-----end allocation vector
 		}else{
 			if(input.coo.verti != 0){
-				
 				output.coo.verti = input.coo.verti - 1;
 				output.coo.horiz = floor( input.coo.horiz/8);
 				output.direction = UP;
@@ -99,20 +96,12 @@ scope locate_block(scope input){
 	}else {
 		if(input.alvec == 1){
 			output.alvec = 1;
-			// if(mtree[input.pnode_sel*2] == 0){
-			printf("input.coo.horiz = %d \n",input.coo.horiz);
-			printf("horiz YU 16 = %d, address = %d\n",input.coo.horiz % 16,address);
-			pvec(address);
-			printf("left node = %d \n",mtree[(input.coo.horiz % 16)*2]);
-			printf("right node = %d \n",mtree[(input.coo.horiz % 16)*2 +1]);
 			if (mtree[(input.coo.horiz % 16)*2] == 0){ 
-				printf("bit0 !!\n");
 				flag_found = 1;
 				local_bit_sel = 0;
 			}else{
 				//	if(mtree[input.pnode_sel*2+1] == 0){
 				if(mtree[(input.coo.horiz % 16)*2 +1] ==0){ 
-					printf("bit1 !!\n");
 					flag_found = 1;
 					local_bit_sel = 1;
 				}
@@ -187,36 +176,36 @@ scope locate_block(scope input){
 				}
 			}
 		}
-		
+
 		if(flag_found == 1){
-			
+			printf("saddr 6 \n");
 			output.search_status = 1;
 			//found allocatable node, return allocatable tree block coordinate
 			output.coo.verti = input.coo.verti;
 			output.coo.horiz = input.coo.horiz;
 			if(input.alvec == 0){
-				output.saddr = input.saddr + output.pnode_sel_phy * (topsize/8);
+				
+				if(topsize == 4){
+				output.saddr = input.saddr + output.pnode_sel;
+				}else{
+					output.saddr = input.saddr + output.pnode_sel_phy * (topsize/8);
+				}
 				
 			}else{
 				output.saddr = input.saddr + local_bit_sel;
 				output.pnode_sel = local_bit_sel;
 				output.pnode_sel_phy = local_bit_sel;
-
 			}
-		
+			
 		}else{
 			if(input.coo.verti != 0){
-
 				output.coo.verti = input.coo.verti - 1;
 				output.coo.horiz = floor( input.coo.horiz/8);
 				output.direction = UP;
 				output.pnode_sel = input.coo.horiz % 8;
-				output.pnode_sel_phy = input.coo.horiz % 8;
-				
-				output.saddr = input.saddr - input.pnode_sel_phy * topsize;
-				
+				output.pnode_sel_phy = input.coo.horiz % 8;				
+				output.saddr = input.saddr - input.pnode_sel_phy * topsize;				
 				printf("didn't find allocatable node, going up! \n");
-
 			}else{
 				printf("allocation failed \n");
 				flag_failed = 1;
@@ -227,8 +216,6 @@ scope locate_block(scope input){
 	if(output.search_status == 1){
 		output.row_base = input.row_base;
 	}   
-	
-	printf("output pnode sel phy = %d\n", output.pnode_sel_phy);
-	
+		
 	return output;
 }

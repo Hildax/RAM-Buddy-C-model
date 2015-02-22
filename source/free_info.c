@@ -1,5 +1,5 @@
 // C model of a hardware RAM-based Buddy allocator
-// created by Hilda Xue, last edited 22 Feb 2015
+// created by Hilda Xue, last edited on 22 Feb 2015
 // this file includes a function which is part of the buddy allocator 
 // this function computes info needed to start marking the tree for de-allocation
 #include "header.h"
@@ -16,7 +16,7 @@ freeprobe get_free_info(int saddr,int reqsize){
 	pnode_sel = 0;
 	row_base = 0; 
 	alvec = 0;
-	
+
 	// verti
 	while(reqsize <= topsize/16){
 		verti ++;
@@ -29,18 +29,21 @@ freeprobe get_free_info(int saddr,int reqsize){
 
 	if(topsize == 2){
 		pnode_sel = saddr % 2;
-	alvec = 1;
+		alvec = 1;
 	}
-	else{
-	pnode_sel = floor((saddr % topsize) / (topsize/8));
-	alvec = 0;
+	if(topsize == 4){
+		pnode_sel = saddr % topsize;
+		alvec = 0;
+	}else{				
+		pnode_sel = floor((saddr % topsize) / (topsize/8));
+		alvec = 0;
 	}
+
 	output.coo.verti = verti;
 	output.coo.horiz = horiz;
 	output.pnode_sel = pnode_sel;
 	output.row_base = row_base;
 	output.alvec = alvec;
-	
-	//---ALVEC CASE?
+
 	return output;
 };

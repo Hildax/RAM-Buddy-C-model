@@ -3,7 +3,6 @@
 // this file includes a function which is part of the buddy allocator 
 // this function marks bit for malloc/free up the tree
 
-
 #include "header.h"
 
 mupdrone mark_allocation_up(mupdrone input){

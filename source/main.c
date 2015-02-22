@@ -57,11 +57,20 @@ saddr1 = alloc(15);
 	de_alloc(15,1);
 	saddr1 = alloc(1);
 	*/
-	for(i = 0;i <35;i++){
-	saddr1 = alloc(1);
+	for(i = 0;i <27;i++){
+	saddr1 = alloc(15);
+/*	ptree(0);
+	ptree(1);
+	ptree(9);*/
+	//ptree(73);
 	}
-	de_alloc(17,1);
+	
+	//pvec(0);
+	de_alloc(288,15);
+//	pvec(0);
 	saddr1 = alloc(1);
+	saddr1 = alloc(15);
+	//pvec(0);
 	
 	return 0;
 }

@@ -1,5 +1,5 @@
 // C model of a hardware RAM-based Buddy allocator
-// created by Hilda Xue, last edited 19 Feb 2015
+// created by Hilda Xue, last edited on 22 Feb 2015
 // this file includes a function which is calls allocator functions to perform "free" 
 #include "header.h"
 
@@ -24,7 +24,7 @@ void de_alloc(int saddr,int reqsize){
 	//------------------------
 	
 	//declarations
-/*
+	/*
 	if (flag_use_alvector == 1 && reqsize == 1){
 		starting_drone.alvec = 1;		
 	}else{
