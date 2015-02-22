@@ -1,5 +1,5 @@
 // C model of a hardware RAM-based Buddy allocator
-// created by Hilda Xue, last edited 21 Feb 2015
+// created by Hilda Xue, last edited 22 Feb 2015
 // this file includes a function which is part of the buddy allocator 
 // locate_block function searches for the allocation address deciding group of nodes
 #include "header.h"
@@ -18,6 +18,7 @@ scope locate_block(scope input){
 	topsize = NUM_MBLOCK/pow(8,input.coo.verti);
 	printf("[Group Search] ");
 	printf("New Group (%d,%d) top node size = %d \n",input.coo.verti,input.coo.horiz,topsize);
+	printf("input saddr = %d \n",input.saddr);
 
 	reqsize = input.request_size;
 	output.request_size = input.request_size;
@@ -77,15 +78,25 @@ scope locate_block(scope input){
 			if(topsize/16 == 1 && flag_use_alvector == 1){
 				output.alvec = 1; 
 			}      
+			printf("output.saddr %d\n",output.saddr);
 			//-----end allocation vector
 		}else{
-			printf("didn't find allocatable node, going up \n");
-			output.coo.verti = input.coo.verti - 1;
-			output.coo.horiz = floor( input.coo.horiz/8);
-			output.direction = UP;
-			output.pnode_sel = input.pnode_sel;
-			output.pnode_sel_phy = input.pnode_sel_phy;
-			output.saddr = input.saddr - input.pnode_sel * topsize;
+			if(input.coo.verti != 0){
+				
+				output.coo.verti = input.coo.verti - 1;
+				output.coo.horiz = floor( input.coo.horiz/8);
+				output.direction = UP;
+				output.pnode_sel = input.coo.horiz % 8;
+				output.pnode_sel_phy = input.coo.horiz % 8;
+				output.saddr = input.saddr - output.pnode_sel_phy * topsize;
+				
+				printf("didn't find allocatable node, going up \n");
+				printf("input sel, output sel [%d,%d]\n",input.pnode_sel_phy,output.pnode_sel_phy);
+
+			}else{
+				printf("allocation failed \n");
+				flag_failed = 1;
+			}			
 		}
 		
 	}else {
@@ -195,16 +206,21 @@ scope locate_block(scope input){
 				output.pnode_sel_phy = local_bit_sel;
 
 			}
+			printf("output.saddr %d\n",output.saddr);
 			
 		}else{
 			if(input.coo.verti != 0){
-				printf("didn't find allocatable node, going up \n");
+
 				output.coo.verti = input.coo.verti - 1;
 				output.coo.horiz = floor( input.coo.horiz/8);
 				output.direction = UP;
-				output.pnode_sel = input.pnode_sel;
-				output.pnode_sel_phy = input.pnode_sel_phy;
+				output.pnode_sel = input.coo.horiz % 8;
+				output.pnode_sel_phy = input.coo.horiz % 8;
+				
 				output.saddr = input.saddr - input.pnode_sel_phy * topsize;
+				
+				printf("didn't find allocatable node, going up! \n");
+
 			}else{
 				printf("allocation failed \n");
 				flag_failed = 1;
@@ -215,6 +231,6 @@ scope locate_block(scope input){
 	if(output.search_status == 1){
 		output.row_base = input.row_base;
 	}   
-
+	
 	return output;
 }

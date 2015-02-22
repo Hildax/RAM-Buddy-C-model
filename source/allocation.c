@@ -57,10 +57,11 @@ int alloc(int request_size){
 
 		working_drone = starting_drone;
 		while(working_drone.request_size != 0){
+
 			working_drone = mark_allocation_down(working_drone);
 			//printf("next coordinate:(%d,%d) \n",working_drone.coo.verti,working_drone.coo.horiz);
 			//printf("allocation vector: %d \n",working_drone.alvec);
-			//printf("size left %d \n",working_drone.request_size); 
+			//printf("size left %d \n",working_drone.request_size); 	
 		}
 
 		if(working_drone.flag_markup == 1){

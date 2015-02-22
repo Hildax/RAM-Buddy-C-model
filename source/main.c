@@ -12,6 +12,7 @@ int main()
 	int saddr1,saddr2,saddr3,saddr4,saddr5,saddr6;
 	int readtree;
 	int mtree[32];
+	int i;
 
 	printf("Behav RAM-based Buddy Allocator\n");
 	bram_init(WORDS_TOTAL);
@@ -20,7 +21,7 @@ int main()
 	//check if separate allocation vector is required
 	check_alvector();
 	printf("\n");
-	
+	/*
 	saddr1= alloc(400);	
 	saddr2= alloc(32);
 	de_alloc(saddr1,400);	
@@ -29,5 +30,14 @@ int main()
 	saddr5= alloc(1);	
 	de_alloc(saddr5,1);
 	saddr6 = alloc(2);
+	*/
+	
+	for(i = 0;i<17;i++){
+		printf("allocation %d\n",i);
+		saddr1 = alloc(15);
+		ptree(0);
+		ptree(1);
+		ptree(2);
+	}
 	return 0;
 }

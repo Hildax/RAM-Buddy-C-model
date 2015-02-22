@@ -125,7 +125,6 @@ drone mark_allocation_down(drone input){
 		offset = shift/4 + n_f;
 		
 	}else{
-		pgroup(mtree);
 		//printf("**in case : topsize = not 16 or 4\n");
 		n_f = floor(reqsize /(topsize/8));
 		/*
@@ -138,14 +137,12 @@ drone mark_allocation_down(drone input){
 		printf("n_f = %d\n",n_f);
 		for(i =shift; i <shift + 2*n_f; i ++){
 			mtree[i + 14] = flag_alloc;
-			printf("i = %d\n",i);
 		}
 		output.request_size = reqsize - n_f * (topsize/8);
 		if(output.request_size != 0){
 			mtree[shift + 2*n_f + 14] = 1; // don't really care in case of free
 		}
 		offset = shift/2 + n_f;
-		pgroup(mtree);
 	}
 	
 	

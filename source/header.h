@@ -4,7 +4,7 @@
 //case changeable
 #define REQUEST_SIZE 3
 //example design parameters
-#define WORDS_TOTAL 584
+#define WORDS_TOTAL 524288 //584
 #define ALLO_VECTOR_LENGTH 64
 #define NUM_MBLOCK 2048
 //direction
@@ -75,9 +75,7 @@ int free_vcheck;
 int held_start_verti;
 int flag_failed;
 
-
 holder held_mtree[GD];
-
 int held_pnode_sel[GD];
 int held_address[GD];
 
