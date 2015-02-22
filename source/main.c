@@ -31,7 +31,7 @@ int main()
 	de_alloc(saddr5,1);
 	saddr6 = alloc(2);
 	*/
-	
+	/*
 	for(i = 0;i<20;i++){
 		printf("allocation %d\n",i);
 		saddr1 = alloc(15);
@@ -53,6 +53,15 @@ saddr1 = alloc(15);
 	ptree(18);
 	saddr1 = alloc(15);
 	
+	saddr1 = alloc(1);
+	de_alloc(15,1);
+	saddr1 = alloc(1);
+	*/
+	for(i = 0;i <35;i++){
+	saddr1 = alloc(1);
+	}
+	de_alloc(17,1);
+	saddr1 = alloc(1);
 	
 	return 0;
 }

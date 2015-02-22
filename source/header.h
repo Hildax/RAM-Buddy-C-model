@@ -60,6 +60,7 @@ typedef struct FreeInfo{
 	coordi coo;
 	int pnode_sel;
 	int row_base;	
+	int alvec;
 }freeprobe;
 
 typedef struct HolderType{

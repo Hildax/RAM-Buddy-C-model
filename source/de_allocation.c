@@ -24,17 +24,17 @@ void de_alloc(int saddr,int reqsize){
 	//------------------------
 	
 	//declarations
-
+/*
 	if (flag_use_alvector == 1 && reqsize == 1){
 		starting_drone.alvec = 1;		
 	}else{
 		starting_drone.alvec = 0;		
 	}
-	
+*/	
 	starting_drone.request_size = reqsize;
 	starting_drone.coo = free_req.coo;
 	starting_drone.row_base = free_req.row_base;
-	//starting_drone.alvec = 0 ;//located_scope.alvec; //*******
+	starting_drone.alvec = free_req.alvec;//located_scope.alvec; //*******
 	starting_drone.pnode_sel = free_req.pnode_sel;
 	starting_drone.saddr = saddr;
 	starting_drone.original_reqsize = reqsize;
