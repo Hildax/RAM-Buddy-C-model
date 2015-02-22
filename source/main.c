@@ -27,7 +27,7 @@ int main()
 
 	de_alloc(saddr1,400);
 	
-	saddr3= alloc(188);
+ saddr3= alloc(188);
 
 	saddr4= alloc(1);
 
@@ -40,15 +40,12 @@ int main()
 
 	saddr6 = alloc(2);
 	
-	ptree(0);
-ptree(3);
-ptree(32);
 
-	/*
 ptree(0);
-ptree(2);
-ptree(20);
-*/
+ptree(1);
+ptree(14);
+ptree(120);
+
 	return 0;
 }
 

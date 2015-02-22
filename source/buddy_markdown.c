@@ -53,14 +53,14 @@ drone mark_allocation_down(drone input){
 	n_f = 0;
 	 
 	if(flag_first == 1){
-		if(topsize == 4){ 
-		shift = input.pnode_sel *4;
-		printf("previous node sel = %d \n",input.pnode_sel);
-		}
-		else{	
+		//if(topsize == 4){ 
+		//shift = input.pnode_sel *4;
+		//printf("previous node sel = %d \n",input.pnode_sel);
+		//}
+		//else{	
 		shift = input.pnode_sel * 2;
 		printf("shift = %d first\n",shift);
-		}
+		//}
 		flag_first = 0;		
 	}else{
 		shift = 0;		
