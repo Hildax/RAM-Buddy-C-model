@@ -73,7 +73,7 @@ void pvec(int address){
 	
 	printf("allocation vector group with address %d has content: ",address);
 	
-	for(i = 0; i<30; i++){
+	for(i = 0; i<32; i++){
 		printf("%d",mtree[i]);
 		if(i%2 != 0){
 			printf(" ");
@@ -86,7 +86,6 @@ void pvec(int address){
 //printf local group(mapped)
 void pgroup(int *input){
 
-	int mtree[32];
 	int i;
 	printf("group has content: \n");
 	

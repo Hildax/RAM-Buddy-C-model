@@ -6,14 +6,10 @@
 //example design parameters
 #define WORDS_TOTAL 584
 #define ALLO_VECTOR_LENGTH 64
-#define NUM_MBLOCK 16384
+#define NUM_MBLOCK 1024
 //direction
 #define UP 1
 #define DOWN 0
-
-#define max_global_depth1 log2(NUM_MBLOCK)
-
-#define max_group_depth1 ceil(max_global_depth1/3) + 1
 
 #define GD 30 //group depth, for example
 

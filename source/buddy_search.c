@@ -1,5 +1,5 @@
 // C model of a hardware RAM-based Buddy allocator
-// created by Hilda Xue, last edited 19 Feb 2015
+// created by Hilda Xue, last edited 21 Feb 2015
 // this file includes a function which is part of the buddy allocator 
 // locate_block function searches for the allocation address deciding group of nodes
 #include "header.h"
@@ -32,20 +32,24 @@ scope locate_block(scope input){
 	if (input.alvec == 0){
 		address = output.row_base + input.coo.horiz;
 		printf("Group Address: %d \n",address);
+		output.tree_block = bram_read(address);
+		tree_map(mtree,output.tree_block);  
 	}else{
 		address = floor(input.coo.horiz/16); 
 		printf("ALLOCATION VECTOR INSTANCE %d \n",address);
+		output.tree_block = vector_read(address);
+		tree_map(mtree,output.tree_block);  
 	}
 
-	output.tree_block = bram_read(address);
-	tree_map(mtree,output.tree_block);  
+
 	output.alvec = 0;
 	flag_found = 0;
 	
 	//allocation will happen in some lever further down
 	//find the first available p in lowest local level
 	if(reqsize <= topsize/16){
-
+		pgroup(mtree);
+		
 		output.search_status = 0;
 		output.direction = DOWN;
 
@@ -89,8 +93,11 @@ scope locate_block(scope input){
 		if(input.alvec == 1){
 			output.alvec = 1;
 			// if(mtree[input.pnode_sel*2] == 0){
+			printf("input.coo.horiz = %d \n",input.coo.horiz);
 			printf("horiz YU 16 = %d, address = %d\n",input.coo.horiz % 16,address);
 			pvec(address);
+			printf("left node = %d \n",mtree[(input.coo.horiz % 16)*2]);
+			printf("right node = %d \n",mtree[(input.coo.horiz % 16)*2 +1]);
 			if (mtree[(input.coo.horiz % 16)*2] == 0){ 
 				printf("bit0 !!\n");
 				flag_found = 1;
@@ -168,6 +175,7 @@ scope locate_block(scope input){
 				}
 			}
 		}
+		
 		if(flag_found == 1){
 			
 			output.search_status = 1;
@@ -176,11 +184,15 @@ scope locate_block(scope input){
 			output.coo.horiz = input.coo.horiz;
 			if(input.alvec == 0){
 				output.saddr = input.saddr + output.pnode_sel_phy * (topsize/8);
-
+				printf("output.saddr = %d \n",output.saddr);
+				printf("output.pnode_sel = %d \n",output.pnode_sel);
+				printf("output.pnode_sel_phy = %d \n",output.pnode_sel_phy);
+				
 			}else{
 				output.saddr = input.saddr + local_bit_sel;
 				output.pnode_sel = local_bit_sel;
 				output.pnode_sel_phy = local_bit_sel;
+
 			}
 			
 		}else{

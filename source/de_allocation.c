@@ -18,7 +18,7 @@ void de_alloc(int saddr,int reqsize){
 	free_vcheck = 1;
 	free_req = get_free_info(saddr,reqsize);
 	
-	//printf("free info: location (%d,%d), node_sel = %d, row base = %d \n",free_req.coo.verti,free_req.coo.horiz,free_req.pnode_sel,free_req.row_base);
+	printf("free info: location (%d,%d), node_sel = %d, row base = %d \n",free_req.coo.verti,free_req.coo.horiz,free_req.pnode_sel,free_req.row_base);
 	
 	//------------------------
 	

@@ -24,9 +24,10 @@ freeprobe get_free_info(int saddr,int reqsize){
 		topsize = topsize/8;
 		//I want to give one row_base above
 		//row_base = row_base + pow(2, (double)(3*(verti-1))); 
+		row_base = row_base + pow(2,(double)(3*(verti - 2)));	
 	}
-	row_base = row_base + pow(2,(double)(3*(verti - 2)));
-	//printf("row_base = %d \n",row_base);
+
+	printf("row_base = %d \n",row_base);
 	
 	// horiz
 	horiz = floor(saddr/topsize);
@@ -34,7 +35,6 @@ freeprobe get_free_info(int saddr,int reqsize){
 	// pnode_sel 
 	pnode_sel = (saddr % topsize)/2;
 	
-	//printf("location (%d,%d)\n",verti,horiz);
 	
 	output.coo.verti = verti;
 	output.coo.horiz = horiz;

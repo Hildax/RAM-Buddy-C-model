@@ -1,5 +1,5 @@
 // C model of a hardware RAM-based Buddy allocator
-// created by Hilda Xue, last edited 19 Feb 2015
+// created by Hilda Xue, last edited 21 Feb 2015
 // this file includes a function which is part of the buddy allocator 
 // this function marks bit for malloc/free down the tree
 #include "header.h"
@@ -15,7 +15,7 @@ drone mark_allocation_down(drone input){
 	int local_bit_sel;
 	int n_f;
 	int shift,offset;
-	
+		
 	printf("[Node Mark] Group (%d,%d) top node size = %d, size left to be marked = %d \n",input.coo.verti,input.coo.horiz,topsize, input.request_size);
 	printf("If using allocation vector [** %d **]\n",input.alvec);
 	
@@ -26,16 +26,22 @@ drone mark_allocation_down(drone input){
 		output.row_base = input.row_base - pow(2, (double)(3*(input.coo.verti)));
 	}
 
+	
 	if (input.alvec == 0){
 		address = output.row_base + input.coo.horiz;
 		//printf("location:(%d,%d) address: %d \n",input.coo.verti,input.coo.horiz,address);
+		printf("group address %d \n",address);
+		
+		tree_map(mtree,bram_read(address));
+		tree_map(mtree_copy,bram_read(address));
 	}else{
 		address = floor(input.coo.horiz/16);
-		printf("ALLOCATION VECTOR INSTANCE %d \n",address);
+		printf("ALLOCATION VECTOR INSTANCE %d, group-like location (%d,%d) \n",address,input.coo.verti,input.coo.horiz);
+		tree_map(mtree,vector_read(address));
+		tree_map(mtree_copy,vector_read(address));
 	}  
 	
-	tree_map(mtree,bram_read(address));
-	tree_map(mtree_copy,bram_read(address));
+
 	//output direction is always DOWN
 	output.direction = DOWN;
 	output.alvec = 0;
@@ -43,30 +49,28 @@ drone mark_allocation_down(drone input){
 	output.original_reqsize = output.original_reqsize;
 	output.saddr = input.saddr;
 
-	shift = 0;
+	shift = 0; 
 	n_f = 0;
 	if(flag_first == 1){
 		shift = input.pnode_sel * 2;	
 		flag_first = 0;
 	}
 	offset = shift/2 + n_f;
-
+		
 	if(input.alvec == 1){
-		if(input.original_reqsize == 1 && input.saddr % 2 != 0){
+		if(input.original_reqsize == 1 && input.saddr % 2 != 0){		
 			mtree[(input.coo.horiz % 16)*2 + 1] = flag_alloc;
 		}else{
 			mtree[(input.coo.horiz % 16)*2] = flag_alloc;
 		} 
 		output.request_size = 0;
-
 	}else if(reqsize < topsize/8){   
 		printf("**reqsize < topsize/8 \n"); 
 
 		//write bits 14 in mtree to 1,1
 		mtree[14] = 1;   
 		output.request_size = input.request_size;
-
-
+		
 	}else if(topsize == 16){
 		//topsize = 16 
 		//need to use allocation vector
@@ -121,7 +125,8 @@ drone mark_allocation_down(drone input){
 		}
 		offset = shift/2 + n_f;
 	}
-
+	
+	
 	if(output.request_size != 0){
 		output.pnode_sel = offset;
 		output.coo.verti = input.coo.verti + 1;
@@ -136,24 +141,24 @@ drone mark_allocation_down(drone input){
 	} 
 
 	update_group(mtree,input.alvec);
-
-	if (flag_alloc == 1){
-		
-		if(input.alvec == 0){
-			
+	
+	
+	
+	if (flag_alloc == 1){		
+		if(input.alvec == 0){			
 			bram_write(address, tree_mapback(mtree)); 
-		}else{
+		}else{				
 			vector_write(address, tree_mapback(mtree)); 
 		}
 	}else{
-		
 		if(free_vcheck == 1){
 			held_start_verti = input.coo.verti;	
 			free_vcheck = 0;
 		}
 		//de-allocation, write the previous tree. after the write, update the hold regs
-
+		
 		if(output.request_size == 0){
+			
 			//there is a case of alvec == 1
 			if(input.alvec == 0){
 				//printf("updating for free, start verti = %d\n, current coo verti = %d\n",held_start_verti,input.coo.verti);
@@ -172,7 +177,7 @@ drone mark_allocation_down(drone input){
 					update_group(held_mtree[i].group,0);	
 					bram_write(held_address[i],tree_mapback(held_mtree[i].group));
 				}			
-			}else{
+			}else{							
 				//end up in allocation vector
 				vector_write(address,tree_mapback(mtree));
 				
@@ -186,24 +191,27 @@ drone mark_allocation_down(drone input){
 				}else{
 					output.node_and = 0;
 				}
-				
+	
 				if(input.request_size == input.original_reqsize){
-					held_mtree[input.coo.verti - 1].group[14 + held_pnode_sel[input.coo.verti - 1]*2] = output.node_or;
-					held_mtree[input.coo.verti - 1].group[15 + held_pnode_sel[input.coo.verti - 1]*2] = output.node_and;				
+	
+					held_mtree[input.coo.verti - 1].group[14 + held_pnode_sel[input.coo.verti - 1]*2] = output.node_or; 			
+					held_mtree[input.coo.verti - 1].group[15 + held_pnode_sel[input.coo.verti - 1]*2] = output.node_and;	
+									
 					update_group(held_mtree[input.coo.verti - 1].group,0);	
-					bram_write(held_address[i],tree_mapback(held_mtree[input.coo.verti - 1].group));	
-					
+
+					vector_write(held_address[input.coo.verti - 1],tree_mapback(held_mtree[input.coo.verti - 1].group));	
 					for(i = input.coo.verti - 2; i >= held_start_verti; i--){
 						held_mtree[i].group[14 + held_pnode_sel[i]*2] =held_mtree[i+1].group[0] ;
 						held_mtree[i].group[15 + held_pnode_sel[i]*2] =held_mtree[i+1].group[1] ;
 						update_group(held_mtree[i].group,1);	
 						bram_write(held_address[i],tree_mapback(held_mtree[i].group));	
-					}				
+					}	
+								
 				}else{
 					NULL;
-					printf("just mark up\n");
+					//printf("just mark up\n");
 				}
-				
+					
 			}
 		}else{
 			//not the last one
@@ -216,32 +224,41 @@ drone mark_allocation_down(drone input){
 			} else{NULL;}
 		}
 	}
-
+						
 	//decide about mark up
 	if(input.request_size == input.original_reqsize){
 		
 		if (mtree[0] != mtree_copy[0] || mtree[1] != mtree_copy[1] || (input.original_reqsize == 1 && flag_use_alvector == 1)){
 			printf("Downward marking finished, upward marking began.  \n");
-			output.flag_markup = 1;
+			//if in top group, no need to mark up
+			if(input.coo.verti == 0){
+				output.flag_markup = 0;
+			}else{
+				output.flag_markup = 1;
+			}
+			
 			output.node_or = mtree[0];
 			output.node_and = mtree[1];
 			if(input.original_reqsize == 1){
 				if(mtree[(input.coo.horiz % 16)*2] == 1 || mtree[(input.coo.horiz % 16)*2 + 1] == 1){
-					printf("whatsup or 1\n");
+					//printf("whatsup or 1\n");
 					output.node_or = 1;
 				}else{
 					output.node_or = 0;
-					printf("whatsup or 0\n");
+					//printf("whatsup or 0\n");
 				}
+
 				if(mtree[(input.coo.horiz % 16)*2] == 1 &&  mtree[(input.coo.horiz % 16)*2 + 1] == 1){
 					output.node_and = 1;
-					printf("whatsup and 1\n");
+					//printf("whatsup and 1\n");
 				}else{
 					output.node_and = 0;
-					printf("whatsup and 0\n");
+					//printf("whatsup and 0\n");
 				}
 			}
+
 		}else{
+			output.flag_markup = 0;
 			printf("Downward marking finished, upward marking is not required. \n");
 		}
 	}
@@ -250,10 +267,13 @@ drone mark_allocation_down(drone input){
 		output.node_or = input.node_or;
 		output.node_and = input.node_and;
 	}
-	
-	//printf("need mark UP?:%d\n",output.flag_markup);
+	/*
+	printf("need mark UP?:%d\n",output.flag_markup);
 
-	//printf("or %d,and %d\n", output.node_or,output.node_and);
+	printf("or %d,and %d\n", output.node_or,output.node_and);
+	printf("mtree[0] %d,mtree[1] %d\n", mtree[0],mtree[1]);
+	*/
 	
+
 	return output;
 }
