@@ -51,10 +51,22 @@ drone mark_allocation_down(drone input){
 
 	shift = 0; 
 	n_f = 0;
+	 
 	if(flag_first == 1){
-		shift = input.pnode_sel * 2;	
-		flag_first = 0;
+		if(topsize == 4){ 
+		shift = input.pnode_sel *4;
+		printf("previous node sel = %d \n",input.pnode_sel);
+		}
+		else{	
+		shift = input.pnode_sel * 2;
+		printf("shift = %d first\n",shift);
+		}
+		flag_first = 0;		
+	}else{
+		shift = 0;		
 	}
+	
+	
 	offset = shift/2 + n_f;
 		
 	if(input.alvec == 1){
@@ -75,12 +87,13 @@ drone mark_allocation_down(drone input){
 		//topsize = 16 
 		//need to use allocation vector
 		n_f = floor(reqsize/(topsize/8));
-
+		/*
 		if(flag_alloc == 1){
 			shift = input.pnode_sel * 2;
 		}else{
 			shift = 0;
 		}
+		*/
 		for(i = shift; i < shift + 2*n_f; i ++){
 			mtree[i + 14] = flag_alloc;
 		}
@@ -90,13 +103,15 @@ drone mark_allocation_down(drone input){
 			output.alvec = 1;
 		}		
 		offset = shift/2 + n_f;
-	}else if(topsize == 4){
+	}else if(topsize == 4){		
 		//topsize = 4
+		/*
 		if(flag_alloc == 1){
 			shift = input.pnode_sel * 4;
 		}else{
 			shift = 0;
 		}
+		*/
 		n_f = floor(reqsize/(topsize/4));
 		for(i = shift; i < shift + 4*n_f; i ++){
 			mtree[i+ 14] = flag_alloc;
@@ -108,22 +123,29 @@ drone mark_allocation_down(drone input){
 			mtree[shift + 4*n_f + 6 + 1] = flag_alloc;
 		}
 		offset = shift/4 + n_f;
+		
 	}else{
+		pgroup(mtree);
 		//printf("**in case : topsize = not 16 or 4\n");
 		n_f = floor(reqsize /(topsize/8));
+		/*
 		if(flag_alloc == 1){
 			shift = input.pnode_sel * 2;
 		}else{
 			shift = 0;
 		}
+		*/
+		printf("n_f = %d\n",n_f);
 		for(i =shift; i <shift + 2*n_f; i ++){
 			mtree[i + 14] = flag_alloc;
+			printf("i = %d\n",i);
 		}
 		output.request_size = reqsize - n_f * (topsize/8);
 		if(output.request_size != 0){
 			mtree[shift + 2*n_f + 14] = 1; // don't really care in case of free
 		}
 		offset = shift/2 + n_f;
+		pgroup(mtree);
 	}
 	
 	
@@ -239,21 +261,21 @@ drone mark_allocation_down(drone input){
 			
 			output.node_or = mtree[0];
 			output.node_and = mtree[1];
-			if(input.original_reqsize == 1){
+			if(input.original_reqsize == 1 && input.alvec == 1){
 				if(mtree[(input.coo.horiz % 16)*2] == 1 || mtree[(input.coo.horiz % 16)*2 + 1] == 1){
-					//printf("whatsup or 1\n");
+					printf("whatsup or 1\n");
 					output.node_or = 1;
 				}else{
 					output.node_or = 0;
-					//printf("whatsup or 0\n");
+					printf("whatsup or 0\n");
 				}
 
 				if(mtree[(input.coo.horiz % 16)*2] == 1 &&  mtree[(input.coo.horiz % 16)*2 + 1] == 1){
 					output.node_and = 1;
-					//printf("whatsup and 1\n");
+					printf("whatsup and 1\n");
 				}else{
 					output.node_and = 0;
-					//printf("whatsup and 0\n");
+					printf("whatsup and 0\n");
 				}
 			}
 
@@ -267,12 +289,16 @@ drone mark_allocation_down(drone input){
 		output.node_or = input.node_or;
 		output.node_and = input.node_and;
 	}
+	
 	/*
 	printf("need mark UP?:%d\n",output.flag_markup);
 
 	printf("or %d,and %d\n", output.node_or,output.node_and);
 	printf("mtree[0] %d,mtree[1] %d\n", mtree[0],mtree[1]);
 	*/
+	//pgroup(mtree_copy);
+	//pgroup(mtree);
+	
 	
 
 	return output;

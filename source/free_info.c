@@ -33,8 +33,9 @@ freeprobe get_free_info(int saddr,int reqsize){
 	horiz = floor(saddr/topsize);
 	
 	// pnode_sel 
-	pnode_sel = (saddr % topsize)/2;
-	
+	pnode_sel = (saddr % topsize);// /2?
+	printf("saddr %d, topsize %d\n",saddr,topsize);
+	printf("pnode_sel = %d\n",pnode_sel);
 	
 	output.coo.verti = verti;
 	output.coo.horiz = horiz;

@@ -6,7 +6,7 @@
 //example design parameters
 #define WORDS_TOTAL 584
 #define ALLO_VECTOR_LENGTH 64
-#define NUM_MBLOCK 1024
+#define NUM_MBLOCK 512
 //direction
 #define UP 1
 #define DOWN 0
@@ -73,6 +73,7 @@ int flag_first;
 int flag_alloc;
 int free_vcheck;
 int held_start_verti;
+int flag_failed;
 
 
 holder held_mtree[GD];

@@ -47,6 +47,7 @@ mupdrone mark_allocation_up(mupdrone input){
 	printf("Marking Upwards \n");
 	printf("updated  ");
 	pgroup(mtree);
-*/
+	*/
+
 	return output;
 }

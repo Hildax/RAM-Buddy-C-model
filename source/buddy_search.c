@@ -48,8 +48,7 @@ scope locate_block(scope input){
 	//allocation will happen in some lever further down
 	//find the first available p in lowest local level
 	if(reqsize <= topsize/16){
-		pgroup(mtree);
-		
+
 		output.search_status = 0;
 		output.direction = DOWN;
 
@@ -124,7 +123,6 @@ scope locate_block(scope input){
 				}    
 				while(flag_found == 0 && i < 30){
 					if(mtree[i] == 0){
-						printf("[[[[i = %d]]]]",i);
 						flag_found = 1;
 						local_sel = (i-14)/2;
 						output.saddr = input.saddr + local_sel * (topsize/8);
@@ -170,7 +168,13 @@ scope locate_block(scope input){
 							}
 						}
 					}else{
-						NULL;
+						if(mtree[0] == 0){
+							flag_found = 1;
+							local_sel = 0;
+							output.saddr = input.saddr;
+							output.pnode_sel = 0;
+							output.pnode_sel_phy = 0;
+						}
 					}
 				}
 			}
@@ -184,9 +188,6 @@ scope locate_block(scope input){
 			output.coo.horiz = input.coo.horiz;
 			if(input.alvec == 0){
 				output.saddr = input.saddr + output.pnode_sel_phy * (topsize/8);
-				printf("output.saddr = %d \n",output.saddr);
-				printf("output.pnode_sel = %d \n",output.pnode_sel);
-				printf("output.pnode_sel_phy = %d \n",output.pnode_sel_phy);
 				
 			}else{
 				output.saddr = input.saddr + local_bit_sel;
@@ -196,6 +197,7 @@ scope locate_block(scope input){
 			}
 			
 		}else{
+			if(input.coo.verti != 0){
 			printf("didn't find allocatable node, going up \n");
 			output.coo.verti = input.coo.verti - 1;
 			output.coo.horiz = floor( input.coo.horiz/8);
@@ -203,6 +205,10 @@ scope locate_block(scope input){
 			output.pnode_sel = input.pnode_sel;
 			output.pnode_sel_phy = input.pnode_sel_phy;
 			output.saddr = input.saddr - input.pnode_sel_phy * topsize;
+			}else{
+			printf("allocation failed \n");
+			flag_failed = 1;
+			}			
 		}     
 	} 
 

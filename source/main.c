@@ -20,55 +20,35 @@ int main()
 	//check if separate allocation vector is required
 	check_alvector();
 	printf("\n");
-
-	//saddr1 = alloc(400);
-	//de_alloc(saddr2,4);
-
-	//saddr2= alloc(32);
-	
-
-	//de_alloc(saddr1,400);
-
 	
 	saddr1= alloc(400);
-	ptree(0);
-	ptree(4);
-
-
 	
 	saddr2= alloc(32);
-	ptree(0);
-	ptree(4);
 
 	de_alloc(saddr1,400);
 	
 	saddr3= alloc(188);
-	ptree(0);
-	ptree(2);
-	ptree(20);	
-	
+
 	saddr4= alloc(1);
-	ptree(0);
-	ptree(2);
-	ptree(20);	
-	pvec(5);
-	
+
 	saddr5= alloc(1);
-	ptree(0);
-	ptree(2);
-	ptree(20);	
-	pvec(5);
+
 	
-	de_alloc(saddr4,1);
-	/*
-	ptree(0);
-	ptree(2);
-	ptree(20);	
-	pvec(5);
-	*/
-	saddr6 = alloc(1);
+	de_alloc(saddr5,1);
 	
 
+
+	saddr6 = alloc(2);
+	
+	ptree(0);
+ptree(3);
+ptree(32);
+
+	/*
+ptree(0);
+ptree(2);
+ptree(20);
+*/
 	return 0;
 }
 
