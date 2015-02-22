@@ -82,7 +82,7 @@ drone mark_allocation_down(drone input){
 		printf("**reqsize < topsize/8 \n"); 
 
 		//write bits 14 in mtree to 1,1
-		mtree[14] = 1;   
+		mtree[shift + 14] = flag_alloc;   
 		output.request_size = input.request_size;
 		
 	}else if(topsize == 16){
@@ -206,6 +206,7 @@ drone mark_allocation_down(drone input){
 					//held_address[i] = address;					
 					update_group(held_mtree[i].group,0);	
 					bram_write(held_address[i],tree_mapback(held_mtree[i].group));
+
 				}			
 			}else{							
 				//end up in allocation vector
@@ -222,7 +223,7 @@ drone mark_allocation_down(drone input){
 					output.node_and = 0;
 				}
 				
-				if(input.request_size == input.original_reqsize){
+				if(input.request_size != input.original_reqsize){//input reqsize != 1 and we are in allocation vector
 					
 					held_mtree[input.coo.verti - 1].group[14 + held_pnode_sel[input.coo.verti - 1]*2] = output.node_or; 			
 					held_mtree[input.coo.verti - 1].group[15 + held_pnode_sel[input.coo.verti - 1]*2] = output.node_and;	
@@ -237,7 +238,7 @@ drone mark_allocation_down(drone input){
 						bram_write(held_address[i],tree_mapback(held_mtree[i].group));	
 					}	
 					
-				}else{
+				}else{//if reqsize originally = 1
 					NULL;
 					//printf("just mark up\n");
 				}
@@ -310,6 +311,8 @@ drone mark_allocation_down(drone input){
 	//pgroup(mtree);
 	
 	printf("size left = %d\n",output.request_size);
+
+	
 
 	return output;
 }

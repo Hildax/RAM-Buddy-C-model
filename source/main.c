@@ -35,7 +35,16 @@ int main()
 	for(i = 0;i<20;i++){
 		printf("allocation %d\n",i);
 		saddr1 = alloc(15);
+		
+		ptree(0);
+		ptree(1);
+
 	}
+	
+	de_alloc(16,15);
+			ptree(0);
+		ptree(1);
+saddr1 = alloc(15);
 	
 	ptree(2);
 	ptree(18);

@@ -228,5 +228,7 @@ scope locate_block(scope input){
 		output.row_base = input.row_base;
 	}   
 	
+	printf("output pnode sel phy = %d\n", output.pnode_sel_phy);
+	
 	return output;
 }
