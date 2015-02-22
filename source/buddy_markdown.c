@@ -15,7 +15,7 @@ drone mark_allocation_down(drone input){
 	int local_bit_sel;
 	int n_f;
 	int shift,offset;
-		
+	
 	printf("[Node Mark] Group (%d,%d) top node size = %d, size left to be marked = %d \n",input.coo.verti,input.coo.horiz,topsize, input.request_size);
 	printf("If using allocation vector [** %d **]\n",input.alvec);
 	
@@ -51,7 +51,7 @@ drone mark_allocation_down(drone input){
 
 	shift = 0; 
 	n_f = 0;
-	 
+	
 	if(flag_first == 1){
 		//if(topsize == 4){ 
 		//shift = input.pnode_sel *4;
@@ -59,7 +59,7 @@ drone mark_allocation_down(drone input){
 		//}
 		//else{	
 		shift = input.pnode_sel * 2;
-		printf("shift = %d first\n",shift);
+		//printf("shift = %d first\n",shift);
 		//}
 		flag_first = 0;		
 	}else{
@@ -68,7 +68,7 @@ drone mark_allocation_down(drone input){
 	
 	
 	offset = shift/2 + n_f;
-		
+	
 	if(input.alvec == 1){
 		if(input.original_reqsize == 1 && input.saddr % 2 != 0){		
 			mtree[(input.coo.horiz % 16)*2 + 1] = flag_alloc;
@@ -213,12 +213,12 @@ drone mark_allocation_down(drone input){
 				}else{
 					output.node_and = 0;
 				}
-	
+				
 				if(input.request_size == input.original_reqsize){
-	
+					
 					held_mtree[input.coo.verti - 1].group[14 + held_pnode_sel[input.coo.verti - 1]*2] = output.node_or; 			
 					held_mtree[input.coo.verti - 1].group[15 + held_pnode_sel[input.coo.verti - 1]*2] = output.node_and;	
-									
+					
 					update_group(held_mtree[input.coo.verti - 1].group,0);	
 
 					vector_write(held_address[input.coo.verti - 1],tree_mapback(held_mtree[input.coo.verti - 1].group));	
@@ -228,12 +228,12 @@ drone mark_allocation_down(drone input){
 						update_group(held_mtree[i].group,1);	
 						bram_write(held_address[i],tree_mapback(held_mtree[i].group));	
 					}	
-								
+					
 				}else{
 					NULL;
 					//printf("just mark up\n");
 				}
-					
+				
 			}
 		}else{
 			//not the last one
@@ -246,7 +246,7 @@ drone mark_allocation_down(drone input){
 			} else{NULL;}
 		}
 	}
-						
+	
 	//decide about mark up
 	if(input.request_size == input.original_reqsize){
 		

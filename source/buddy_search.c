@@ -198,16 +198,16 @@ scope locate_block(scope input){
 			
 		}else{
 			if(input.coo.verti != 0){
-			printf("didn't find allocatable node, going up \n");
-			output.coo.verti = input.coo.verti - 1;
-			output.coo.horiz = floor( input.coo.horiz/8);
-			output.direction = UP;
-			output.pnode_sel = input.pnode_sel;
-			output.pnode_sel_phy = input.pnode_sel_phy;
-			output.saddr = input.saddr - input.pnode_sel_phy * topsize;
+				printf("didn't find allocatable node, going up \n");
+				output.coo.verti = input.coo.verti - 1;
+				output.coo.horiz = floor( input.coo.horiz/8);
+				output.direction = UP;
+				output.pnode_sel = input.pnode_sel;
+				output.pnode_sel_phy = input.pnode_sel_phy;
+				output.saddr = input.saddr - input.pnode_sel_phy * topsize;
 			}else{
-			printf("allocation failed \n");
-			flag_failed = 1;
+				printf("allocation failed \n");
+				flag_failed = 1;
 			}			
 		}     
 	} 

@@ -31,8 +31,6 @@ int alloc(int request_size){
 	starting_scope.alvec = 0;
 
 	//search function
-
-
 	printf("\n\nallocation request: size = %d \n",request_size);
 	
 	located_scope = starting_scope;
@@ -82,7 +80,3 @@ int alloc(int request_size){
 	return located_scope.saddr;
 
 }
-
-
-
-

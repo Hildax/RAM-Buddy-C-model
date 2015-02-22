@@ -21,35 +21,13 @@ int main()
 	check_alvector();
 	printf("\n");
 	
-	saddr1= alloc(400);
-	
+	saddr1= alloc(400);	
 	saddr2= alloc(32);
-
-	de_alloc(saddr1,400);
-	
- saddr3= alloc(188);
-
+	de_alloc(saddr1,400);	
+	saddr3= alloc(188);
 	saddr4= alloc(1);
-
-	saddr5= alloc(1);
-
-	
+	saddr5= alloc(1);	
 	de_alloc(saddr5,1);
-	
-
-
 	saddr6 = alloc(2);
-	
-
-ptree(0);
-ptree(1);
-ptree(14);
-ptree(120);
-
 	return 0;
 }
-
-//mark allocation
-
-//end of mark allocation function
-

@@ -11,7 +11,7 @@ mupdrone mark_allocation_up(mupdrone input){
 	int address;
 	int mtree[32];
 	int old_or,old_and;
-		
+	
 	output.done =input.done;
 
 	output.coo.verti = input.coo.verti - 1;
