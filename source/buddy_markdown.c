@@ -56,7 +56,6 @@ drone mark_allocation_down(drone input){
 	if(flag_first == 1){
 		shift = input.pnode_sel * 2;
 		flag_first = 0;		
-		printf("shift = %d\n",shift);
 	}else{
 		shift = 0;		
 	}
@@ -89,18 +88,12 @@ drone mark_allocation_down(drone input){
 		}		
 		offset = shift/2 + n_f;
 	}else if(topsize == 4){		
-		pgroup(mtree);
 		n_f = reqsize;
 		for(i = shift; i < shift + 4*n_f; i ++){
 			mtree[i+ 14] = flag_alloc;
-			printf("i = %d\n",i);
 		}
-
 		output.request_size = reqsize - n_f * 1;
-		offset = shift/4 + n_f;
-		pgroup(mtree);
-
-		
+		offset = shift/4 + n_f;		
 	}else{
 		n_f = floor(reqsize /(topsize/8));
 

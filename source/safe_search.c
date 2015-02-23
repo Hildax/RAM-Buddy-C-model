@@ -33,8 +33,8 @@ scope check_blocking(scope input){
 	int i;
 	int local_sel,local_bit_sel;  
 	
-	printf("[Search Upwards for blocking] ");
-	printf("In (%d,%d)",input.coo.verti,input.coo.horiz);
+	printf("[Check Blocking] ");
+	printf("In (%d,%d) \n",input.coo.verti,input.coo.horiz);
 
 	topsize = TOTAL_MEM_BLOCKS/pow(8,input.coo.verti);
 	output.request_size = input.request_size;

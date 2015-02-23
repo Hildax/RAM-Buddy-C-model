@@ -26,21 +26,12 @@ int main()
 	check_alvector();
 	printf("\n");
 	
-	saddr1= alloc(400);	
-	saddr2= alloc(32);
-	de_alloc(saddr1,400);	
-	saddr3= alloc(188);
-	ptree(299640);
-	saddr4= alloc(1);
-	ptree(299640);
-	saddr5= alloc(1);
-	ptree(299640);	
-	de_alloc(saddr5,1); //***
-	ptree(299640);
-	saddr6 = alloc(2);
-	ptree(299640);
-	saddr5= alloc(1);
-	ptree(299640);
+	for(i = 0;i <27;i++){
+		printf("ALLOCATION[%d] ",i);
+		saddr1 = alloc(15);
+	}
+	
+
 	
 	return 0;
 }

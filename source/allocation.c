@@ -10,12 +10,13 @@ int alloc(int request_size){
 	int mapped_block[32];
 	scope starting_scope;
 	scope bcheck_scope;
-	scope located_scope;
-	
+	scope located_scope;	
 	drone starting_drone;
 	drone working_drone;
 	mupdrone st_drone,mup_drone;
-
+	
+	printf("\nallocation request: size = %d \n",request_size);
+	
 	flag_failed = 0;
 	flag_alloc = 1;
 	flag_first = 1;
@@ -42,8 +43,6 @@ int alloc(int request_size){
 		}	
 	}	
 	//search function
-	printf("\nallocation request: size = %d \n",request_size);
-	
 	
 	while(located_scope.search_status == 0 && flag_failed == 0){
 		located_scope = locate_block(located_scope);
