@@ -12,7 +12,8 @@ int main()
 	int saddr1,saddr2,saddr3,saddr4,saddr5,saddr6;
 	int readtree;
 	int mtree[32];
-	int i,j;
+	int i,j,size;
+	int write_sum,read_sum,write_avg,read_avg;
 
 	for(i= 0; i < MAX_TREE_DEPTH +1; i++){
 		overlord[i] = 0;
@@ -26,28 +27,40 @@ int main()
 	check_alvector();
 	printf("\n");
 	
-	for(i = 0;i <100;i++){
-		/*
-		if (i % 9 == 0){
-			saddr2 = saddr1;
-			j = 0;
-		}
-		j ++;
-		*/
-		j = 0;
-		if(j == 3 ){
-			printf("FREE[%d]", i);
-			de_alloc(saddr2,400);
-		}else{
-			printf("ALLOCATION[%d] ",i);
-			saddr1 = alloc(i+1);
-		}		
-		
-		printf("READ COUNT = %d\n",read_count);
-		printf("WRITE COUNT = %d\n\n",write_count);
+	FILE *f = fopen("test_results/test2.txt", "w");
+	if (f == NULL)
+	{
+		printf("Error opening file!\n");
+		//exit(1);
 	}
 	
-
+	write_sum = 0;
+	read_sum = 0;
+	
+	fprintf(f,"index size READ WRITE\n");
+	for(i = 0;i <10;i++){
+		size = 1000;
+		
+		saddr1 = alloc(size);//size
+		fprintf(f,"[%d] ",i);
+		fprintf(f,"  %d ",size);//size
+		fprintf(f,"  %d ",read_count);
+		fprintf(f,"  %d\n",write_count);
+		
+		write_sum = write_sum + write_count;
+		read_sum = read_sum + read_count;
+		
+	}
+	
+	read_avg = read_sum/i;
+	write_avg = write_sum/i;
+	fprintf(f,"===============================\n");
+	fprintf(f,"READ average  = %d\n",read_avg);
+	fprintf(f,"WRITE average = %d\n",write_avg);
+	
+	
+	
+	fclose(f);
 	
 	return 0;
 }
