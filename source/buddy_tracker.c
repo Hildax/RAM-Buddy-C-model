@@ -45,12 +45,10 @@ scope scope_gen(int size){
 	}
 
 	return output;
-	
 }
 
 getcoo_type get_coo(int addr, int size){
 	getcoo_type output;
-
 	int topsize;
 	int verti,horiz;
 	int row_base,correlated_row_base;
@@ -68,7 +66,6 @@ getcoo_type get_coo(int addr, int size){
 			topsize = topsize/8;
 			row_base = row_base + pow(2,(double)(3*(verti - 2)));	
 		}
-
 		correlated_row_base = row_base + pow(2,(double)(3*(verti - 1)));		
 		horiz = addr - correlated_row_base;
 	}
@@ -77,10 +74,7 @@ getcoo_type get_coo(int addr, int size){
 	output.coo.horiz = horiz;
 	output.row_base = row_base;//of one above
 	output.topsize = topsize;
-	
-	printf("get coo output coo verti = %d,\n",output.coo.verti);
-	printf("row base %d\n",output.row_base);
-	
+
 	return output;
 }
 

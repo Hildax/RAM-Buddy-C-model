@@ -33,7 +33,7 @@ freeprobe get_free_info(int saddr,int reqsize){
 		alvec = 1;
 	}
 	if(topsize == 4){
-		pnode_sel = saddr % topsize;
+		pnode_sel = 2 * (saddr % 4);
 		alvec = 0;
 	}else{				
 		pnode_sel = floor((saddr % topsize) / (topsize/8));

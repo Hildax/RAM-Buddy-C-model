@@ -73,7 +73,7 @@ scope locate_block(scope input){
 		if(flag_found == 1){
 			output.coo.verti = input.coo.verti + 1;
 			output.coo.horiz = input.coo.horiz * 8 + output.pnode_sel;
-			output.saddr = input.saddr + output.pnode_sel * (topsize/8);
+			output.saddr = input.saddr + output.pnode_sel_phy * (topsize/8);//pnode_sel
 			if(topsize/16 == 1 && flag_use_alvector == 1){
 				output.alvec = 1; 
 			}      
@@ -186,7 +186,8 @@ scope locate_block(scope input){
 			if(input.alvec == 0){
 				
 				if(topsize == 4){
-				output.saddr = input.saddr + output.pnode_sel;
+				output.saddr = input.saddr + output.pnode_sel_phy/2;
+				printf("output.saddr %d = input.saddr %d + output.pnode_sel %d \n",output.saddr,input.saddr,output.pnode_sel);
 				}else{
 					output.saddr = input.saddr + output.pnode_sel_phy * (topsize/8);
 				}
