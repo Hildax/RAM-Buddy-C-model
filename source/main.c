@@ -12,7 +12,7 @@ int main()
 	int saddr1,saddr2,saddr3,saddr4,saddr5,saddr6;
 	int readtree;
 	int mtree[32];
-	int i;
+	int i,j;
 
 	for(i= 0; i < MAX_TREE_DEPTH +1; i++){
 		overlord[i] = 0;
@@ -26,9 +26,25 @@ int main()
 	check_alvector();
 	printf("\n");
 	
-	for(i = 0;i <27;i++){
-		printf("ALLOCATION[%d] ",i);
-		saddr1 = alloc(15);
+	for(i = 0;i <100;i++){
+		/*
+		if (i % 9 == 0){
+			saddr2 = saddr1;
+			j = 0;
+		}
+		j ++;
+		*/
+		j = 0;
+		if(j == 3 ){
+			printf("FREE[%d]", i);
+			de_alloc(saddr2,400);
+		}else{
+			printf("ALLOCATION[%d] ",i);
+			saddr1 = alloc(i+1);
+		}		
+		
+		printf("READ COUNT = %d\n",read_count);
+		printf("WRITE COUNT = %d\n\n",write_count);
 	}
 	
 

@@ -187,7 +187,6 @@ scope locate_block(scope input){
 				
 				if(topsize == 4){
 				output.saddr = input.saddr + output.pnode_sel_phy/2;
-				printf("output.saddr %d = input.saddr %d + output.pnode_sel %d \n",output.saddr,input.saddr,output.pnode_sel);
 				}else{
 					output.saddr = input.saddr + output.pnode_sel_phy * (topsize/8);
 				}

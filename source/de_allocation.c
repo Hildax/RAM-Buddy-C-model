@@ -17,6 +17,9 @@ void de_alloc(int saddr,int reqsize){
 	*/
 	printf("deallocation request: address = %d, size = %d \n",saddr,reqsize);
 	
+	read_count = 0;
+	write_count = 0;
+	
 	//change flag
 	flag_alloc = 0;
 	free_vcheck = 1;

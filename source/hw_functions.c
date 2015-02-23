@@ -6,15 +6,19 @@
 
 int bram_read(int address){
 	//  printf("bram entry %d has content %d\n", address, bram[address]);
+	read_count ++;
 	return bram[address];
 }
 
 void bram_write(int address, int content){
+	write_count ++;
 	bram[address] = content;
 }
 
 int vector_read(int address){
+	read_count ++;
 	//  printf("bram entry %d has content %d\n", address, bram[address]);
+	write_count ++;
 	return vec_bram[address];
 }
 

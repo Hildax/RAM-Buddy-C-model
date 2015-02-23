@@ -85,6 +85,9 @@ int held_start_verti;
 int flag_failed;
 int flag_blocking;
 
+int read_count;
+int write_count;
+
 holder held_mtree[GD];
 int held_pnode_sel[GD];
 int held_address[GD];

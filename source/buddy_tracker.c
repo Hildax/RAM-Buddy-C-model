@@ -28,21 +28,11 @@ scope scope_gen(int size){
 	output.search_status = 0;
 	output.alvec = 0;
 	
-	if (size == 1){			
-		output.coo.verti = 0;
-		output.coo.horiz = 0;		
-		output.pnode_sel =  0;
-		output.pnode_sel_phy = 0;// important
-		output.row_base = 0;
-		output.saddr = 0;
-	}
-	else{
-		output.coo = get_coo(addr,size).coo;
-		output.pnode_sel =  output.coo.horiz % 8;
-		output.pnode_sel_phy = output.coo.horiz % 8;// important
-		output.row_base = get_coo(addr,size).row_base;
-		output.saddr = output.coo.horiz * get_coo(addr,size).topsize;
-	}
+	output.coo = get_coo(addr,size).coo;
+	output.pnode_sel =  output.coo.horiz % 8;
+	output.pnode_sel_phy = output.coo.horiz % 8;// important
+	output.row_base = get_coo(addr,size).row_base;
+	output.saddr = output.coo.horiz * get_coo(addr,size).topsize;
 
 	return output;
 }

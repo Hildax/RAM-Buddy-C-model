@@ -17,6 +17,9 @@ int alloc(int request_size){
 	
 	printf("\nallocation request: size = %d \n",request_size);
 	
+	read_count = 0;
+	write_count = 0;
+	
 	flag_failed = 0;
 	flag_alloc = 1;
 	flag_first = 1;
