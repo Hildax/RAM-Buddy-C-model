@@ -50,11 +50,8 @@ getcoo_type get_coo(int addr, int size){
 	}
 
 	correlated_row_base = row_base + pow(2,(double)(3*(verti - 1)));
-	if(addr != 0){
 	horiz = addr - correlated_row_base;
-	}else{
-		horiz = 0;
-	}
+
 	output.coo.verti = verti;
 	output.coo.horiz = horiz;
 	output.row_base = row_base;
