@@ -123,7 +123,7 @@ scope locate_block(scope input){
 					if(mtree[i] == 0){
 						flag_found = 1;
 						local_sel = (i-14)/2;
-						output.saddr = input.saddr + local_sel * (topsize/8);
+						//output.saddr = input.saddr + local_sel * (topsize/8);
 						output.pnode_sel = local_sel;
 						output.pnode_sel_phy = local_sel;
 					}else{
@@ -142,7 +142,7 @@ scope locate_block(scope input){
 						if(mtree[i] == 0){
 							flag_found = 1;
 							local_sel = (i-6)/2;
-							output.saddr = input.saddr + local_sel * (topsize/4);
+							//output.saddr = input.saddr + local_sel * (topsize/4);
 							output.pnode_sel = local_sel;
 							output.pnode_sel_phy = local_sel * 2;
 						}else{
@@ -158,7 +158,7 @@ scope locate_block(scope input){
 							if(mtree[i] == 0){
 								flag_found = 1;
 								local_sel = (i-2)/2;
-								output.saddr = input.saddr + local_sel * (topsize/2);
+								//output.saddr = input.saddr + local_sel * (topsize/2);
 								output.pnode_sel = local_sel;
 								output.pnode_sel_phy = local_sel * 4;
 							}else{
@@ -169,7 +169,7 @@ scope locate_block(scope input){
 						if(mtree[0] == 0){
 							flag_found = 1;
 							local_sel = 0;
-							output.saddr = input.saddr;
+							//output.saddr = input.saddr;
 							output.pnode_sel = 0;
 							output.pnode_sel_phy = 0;
 						}
