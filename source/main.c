@@ -14,6 +14,9 @@ int main()
 	int mtree[32];
 	int i;
 
+for(i= 0; i < MAX_TREE_DEPTH +1; i++){
+	overlord[i] = 0;
+}
 	
 	printf("Behav RAM-based Buddy Allocator\n");
 	bram_init(TREE_RAM_LENGTH);
