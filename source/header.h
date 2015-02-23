@@ -2,9 +2,9 @@
 #include <math.h>
 
 //example design parameters
-#define TOTAL_MEM_BLOCKS 16384
-#define MAX_TREE_DEPTH 14
-#define TREE_RAM_LENGTH 4681
+#define TOTAL_MEM_BLOCKS 128*1024*1024/16 //128MB space, 16B per location
+#define MAX_TREE_DEPTH 23
+#define TREE_RAM_LENGTH 2396745
 #define ALVEC_RAM_LENGTH TOTAL_MEM_BLOCKS/32
 
 //direction

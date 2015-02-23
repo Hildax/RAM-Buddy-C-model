@@ -21,6 +21,7 @@ scope locate_block(scope input){
 
 	reqsize = input.request_size;
 	output.request_size = input.request_size;
+	output.search_status = 0;
 
 	//1.calculate ram address 2.read block 3.map block
 	if(input.direction == DOWN){
@@ -178,7 +179,6 @@ scope locate_block(scope input){
 		}
 
 		if(flag_found == 1){
-			printf("saddr 6 \n");
 			output.search_status = 1;
 			//found allocatable node, return allocatable tree block coordinate
 			output.coo.verti = input.coo.verti;
@@ -218,6 +218,6 @@ scope locate_block(scope input){
 	}   
 	
 	output.group_addr = address;
-	printf("output.group_addr %d\n",output.group_addr);
+
 	return output;
 }

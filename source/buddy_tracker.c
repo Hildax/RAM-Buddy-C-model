@@ -8,7 +8,7 @@ void malloc_update(int size, int group_addr){
 	int overlord_index = get_index(size);
 	
 	overlord[overlord_index] = group_addr;
-	printf("overlord %d has group addr %d \n",overlord_index,group_addr);
+	//printf("overlord %d has group addr %d \n",overlord_index,group_addr);
 }
 
 scope scope_gen(int size){
@@ -16,12 +16,12 @@ scope scope_gen(int size){
 	int addr;
 	
 	addr = overlord[get_index(size)];
-	
+
 	output.request_size = size;
 	output.coo = get_coo(addr,size).coo;
 	output.direction = DOWN;
-	output.pnode_sel = 0;
-	output.pnode_sel_phy = 0;
+	output.pnode_sel =  output.coo.horiz % 8;
+	output.pnode_sel_phy = output.coo.horiz % 8;// important
 	output.search_status = 0;
 	output.row_base = get_coo(addr,size).row_base;
 	output.saddr = output.coo.horiz * get_coo(addr,size).topsize;
@@ -41,25 +41,26 @@ getcoo_type get_coo(int addr, int size){
 	//initialization
 	topsize = TOTAL_MEM_BLOCKS;
 	verti = 0;
-
-	// verti
-	while(size <= topsize/16){
-		verti ++;
-		topsize = topsize/8;
-		row_base = row_base + pow(2,(double)(3*(verti - 2)));	
-	}
-
-	correlated_row_base = row_base + pow(2,(double)(3*(verti - 1)));
+	horiz = 0;
+	row_base = 0;
+		
 	if(addr != 0){
-	horiz = addr - correlated_row_base;
-	}else{
-		horiz = 0;
+		// verti
+		while(size <= topsize/16){
+			verti ++;
+			topsize = topsize/8;
+			row_base = row_base + pow(2,(double)(3*(verti - 2)));	
+		}
+
+		correlated_row_base = row_base + pow(2,(double)(3*(verti - 1)));		
+		horiz = addr - correlated_row_base;
 	}
+	
 	output.coo.verti = verti;
 	output.coo.horiz = horiz;
 	output.row_base = row_base;
 	output.topsize = topsize;
-	printf("coordi (%d,%d)\n",output.coo.verti,output.coo.horiz);
+	
 	return output;
 }
 

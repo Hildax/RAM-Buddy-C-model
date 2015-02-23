@@ -4,13 +4,17 @@
 #include "header.h"
 
 void de_alloc(int saddr,int reqsize){
-	
+	int i;
 	drone starting_drone;
 	drone working_drone;
 	mupdrone st_drone,mup_drone;
 	
 	freeprobe free_req; 
-	
+	/*
+	for(i = 0; i < MAX_TREE_DEPTH +1; i ++){
+		printf("overlord %d has group addr %d \n",i,overlord[i]);
+	}
+	*/
 	printf("deallocation request: address = %d, size = %d \n",saddr,reqsize);
 	
 	//change flag

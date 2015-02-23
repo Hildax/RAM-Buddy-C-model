@@ -14,9 +14,9 @@ int main()
 	int mtree[32];
 	int i;
 
-for(i= 0; i < MAX_TREE_DEPTH +1; i++){
-	overlord[i] = 0;
-}
+	for(i= 0; i < MAX_TREE_DEPTH +1; i++){
+		overlord[i] = 0;
+	}
 	
 	printf("Behav RAM-based Buddy Allocator\n");
 	bram_init(TREE_RAM_LENGTH);
@@ -61,30 +61,49 @@ saddr1 = alloc(15);
 	de_alloc(15,1);
 	saddr1 = alloc(1);
 	*/
-	/*
+	
 	for(i = 0;i <27;i++){
-	saddr1 = alloc(15);
+		saddr1 = alloc(15);
 	}
-	*/
-/*	ptree(0);
+	
+	/*	ptree(0);
 	ptree(1);
 	ptree(9);*/
 	//ptree(73);
 	
 	
 	//pvec(0);
-	/*
+	
 	de_alloc(288,15);
-//	pvec(0);
+	//	pvec(0);
+	//ptree(73);
 	saddr1 = alloc(1);
+	//ptree(73);
 	saddr1 = alloc(15);
+
 	//pvec(0);
 	
-	printf("tree depth (max) %d\n",MAX_TREE_DEPTH);
-	*/
+	//printf("tree depth (max) %d\n",MAX_TREE_DEPTH);
 	
-	saddr1 = alloc(2);
-	de_alloc(saddr1,2);
+	/*
+	printf("1\n");
+	saddr1 = alloc(67);
+
+	printf("2\n");
+	saddr2= alloc(23);
+
+	printf("3\n");
+	saddr3 = alloc(7);
+
+	printf("4\n");
+	saddr4 = alloc(2000);
+
+	printf("5\n");
+	de_alloc(saddr2,23);
+
+	printf("6\n");
+	saddr5 = alloc(67);
+*/
 	
 	return 0;
 }

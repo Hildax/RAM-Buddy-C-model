@@ -5,6 +5,7 @@
 
 int alloc(int request_size){
 	//declarations
+	int i;
 	word tree_block;
 	int mapped_block[32];
 	scope starting_scope;
@@ -30,7 +31,13 @@ int alloc(int request_size){
 	starting_scope.saddr = 0;
 	starting_scope.alvec = 0;
 */
-starting_scope = scope_gen(request_size);
+	/*
+	for(i = 0; i < MAX_TREE_DEPTH +1; i ++){
+		printf("overlord %d has group addr %d \n",i,overlord[i]);
+	}
+	*/
+	
+	starting_scope = scope_gen(request_size);
 	//search function
 	printf("\n\nallocation request: size = %d \n",request_size);
 	

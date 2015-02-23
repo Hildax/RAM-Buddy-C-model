@@ -40,10 +40,9 @@ freeprobe get_free_info(int saddr,int reqsize){
 		alvec = 0;
 	}
 	
-	correlated_row_base = row_base + pow(2,(double)(3*(verti - 1)));
-	output.group_addr = correlated_row_base + horiz;
-	//printf("output.group_addr %d\n",output.group_addr);
+	correlated_row_base = row_base + pow(2,(double)(3*(verti-1)));
 	
+	output.group_addr = correlated_row_base + horiz;
 	output.coo.verti = verti;
 	output.coo.horiz = horiz;
 	output.pnode_sel = pnode_sel;
