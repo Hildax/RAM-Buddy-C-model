@@ -2,7 +2,7 @@
 C model of a hardware RAM-based Buddy allocator
 created by Hilda Xue, last edited 21 Feb 2015
 to compile:
-gcc -o main main.c hw_functions.c sw_functions.c header.h allocation.c buddy_markdown.c buddy_markup.c buddy_search.c de_allocation.c free_info.c -lm
+gcc -o main main.c hw_functions.c sw_functions.c header.h allocation.c buddy_markdown.c buddy_markup.c buddy_search.c de_allocation.c free_info.c buddy_tracker.c -lm
 */
 #include "header.h"
 
@@ -14,9 +14,10 @@ int main()
 	int mtree[32];
 	int i;
 
+	
 	printf("Behav RAM-based Buddy Allocator\n");
-	bram_init(WORDS_TOTAL);
-	vector_init(ALLO_VECTOR_LENGTH);
+	bram_init(TREE_RAM_LENGTH);
+	vector_init(ALVEC_RAM_LENGTH);
 	
 	//check if separate allocation vector is required
 	check_alvector();
@@ -57,20 +58,30 @@ saddr1 = alloc(15);
 	de_alloc(15,1);
 	saddr1 = alloc(1);
 	*/
+	/*
 	for(i = 0;i <27;i++){
 	saddr1 = alloc(15);
+	}
+	*/
 /*	ptree(0);
 	ptree(1);
 	ptree(9);*/
 	//ptree(73);
-	}
+	
 	
 	//pvec(0);
+	/*
 	de_alloc(288,15);
 //	pvec(0);
 	saddr1 = alloc(1);
 	saddr1 = alloc(15);
 	//pvec(0);
+	
+	printf("tree depth (max) %d\n",MAX_TREE_DEPTH);
+	*/
+	
+	saddr1 = alloc(2);
+	de_alloc(saddr1,2);
 	
 	return 0;
 }

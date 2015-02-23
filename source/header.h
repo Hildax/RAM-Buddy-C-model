@@ -1,12 +1,12 @@
 #include <stdio.h>
 #include <math.h>
 
-//case changeable
-#define REQUEST_SIZE 3
 //example design parameters
-#define WORDS_TOTAL 524288 //584
-#define ALLO_VECTOR_LENGTH 64
-#define NUM_MBLOCK 16384
+#define TOTAL_MEM_BLOCKS 16384
+#define MAX_TREE_DEPTH 14
+#define TREE_RAM_LENGTH 4681
+#define ALVEC_RAM_LENGTH TOTAL_MEM_BLOCKS/32
+
 //direction
 #define UP 1
 #define DOWN 0
@@ -32,6 +32,7 @@ typedef struct BlockScope {
 	int row_base;
 	int saddr;
 	int alvec;
+	int group_addr;
 } scope;
 
 typedef struct AllocationDrone {
@@ -61,14 +62,21 @@ typedef struct FreeInfo{
 	int pnode_sel;
 	int row_base;	
 	int alvec;
+	int group_addr;
 }freeprobe;
 
 typedef struct HolderType{
 	int group[32];
 }holder;
 
-word bram[WORDS_TOTAL];
-word vec_bram[ALLO_VECTOR_LENGTH];
+typedef struct get_coo_type{
+	coordi coo;
+	int row_base;
+		int topsize;
+}getcoo_type;
+
+word bram[TREE_RAM_LENGTH];
+word vec_bram[ALVEC_RAM_LENGTH];
 int flag_use_alvector;
 int flag_first;
 int flag_alloc;
@@ -79,6 +87,8 @@ int flag_failed;
 holder held_mtree[GD];
 int held_pnode_sel[GD];
 int held_address[GD];
+
+int overlord[MAX_TREE_DEPTH + 1];
 
 //buddy allocations
 int alloc(int request_size);
@@ -97,6 +107,10 @@ int vector_read(int address);
 void vector_write(int address, int content);
 void check_alvector(void);
 void update_group(int *mtree,int alvec);
+void malloc_update(int size, int group_addr);
+scope scope_gen(int size);
+getcoo_type get_coo(int addr, int size);
+int get_index(int size);
 
 //sw functions
 void tree_map(int *tree_block_i,word tree_block);
@@ -105,6 +119,3 @@ void copy_mtree(int *input, holder *output, int index);
 void ptree(int address);
 void pvec(int address);
 void pgroup(int *input);
-
-
-

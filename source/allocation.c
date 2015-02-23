@@ -16,7 +16,7 @@ int alloc(int request_size){
 	flag_failed = 0;
 	flag_alloc = 1;
 	flag_first = 1;
-	
+	/*
 	//initialise starting scope
 	starting_scope.request_size = request_size;
 	starting_scope.coo.verti = 0;
@@ -29,7 +29,8 @@ int alloc(int request_size){
 	starting_scope.row_base = 0;
 	starting_scope.saddr = 0;
 	starting_scope.alvec = 0;
-
+*/
+starting_scope = scope_gen(request_size);
 	//search function
 	printf("\n\nallocation request: size = %d \n",request_size);
 	
@@ -78,6 +79,8 @@ int alloc(int request_size){
 		}
 		printf("allocation finished, starting address = %d \n\n",located_scope.saddr);
 	}
+	malloc_update(starting_scope.request_size, located_scope.group_addr);
+	
 	return located_scope.saddr;
 
 }

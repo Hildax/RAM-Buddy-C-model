@@ -8,9 +8,10 @@ freeprobe get_free_info(int saddr,int reqsize){
 	freeprobe output;
 	int topsize;
 	int verti,horiz,pnode_sel,row_base,alvec;
+	int correlated_row_base;
 	
 	//initialization
-	topsize = NUM_MBLOCK;
+	topsize = TOTAL_MEM_BLOCKS;
 	verti = 0;
 	horiz = 0;
 	pnode_sel = 0;
@@ -38,7 +39,11 @@ freeprobe get_free_info(int saddr,int reqsize){
 		pnode_sel = floor((saddr % topsize) / (topsize/8));
 		alvec = 0;
 	}
-
+	
+	correlated_row_base = row_base + pow(2,(double)(3*(verti - 1)));
+	output.group_addr = correlated_row_base + horiz;
+	//printf("output.group_addr %d\n",output.group_addr);
+	
 	output.coo.verti = verti;
 	output.coo.horiz = horiz;
 	output.pnode_sel = pnode_sel;

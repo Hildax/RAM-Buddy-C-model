@@ -10,7 +10,7 @@ drone mark_allocation_down(drone input){
 	int address,alvec_address;
 	int mtree[32],mtree_copy[32];
 	int reqsize = input.request_size;
-	int topsize = NUM_MBLOCK/pow(8,input.coo.verti);
+	int topsize = TOTAL_MEM_BLOCKS/pow(8,input.coo.verti);
 	int i;
 	int local_bit_sel;
 	int n_f;
@@ -25,11 +25,9 @@ drone mark_allocation_down(drone input){
 	}else if(input.direction == UP){
 		output.row_base = input.row_base - pow(2, (double)(3*(input.coo.verti)));
 	}
-
 	
 	if (input.alvec == 0){
 		address = output.row_base + input.coo.horiz;
-		//printf("location:(%d,%d) address: %d \n",input.coo.verti,input.coo.horiz,address);
 		printf("group address %d \n",address);
 		
 		tree_map(mtree,bram_read(address));

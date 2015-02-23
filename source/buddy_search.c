@@ -15,7 +15,7 @@ scope locate_block(scope input){
 	int i;
 	int local_sel,local_bit_sel;  
 
-	topsize = NUM_MBLOCK/pow(8,input.coo.verti);
+	topsize = TOTAL_MEM_BLOCKS/pow(8,input.coo.verti);
 	printf("[Search] ");
 	printf("In (%d,%d) t_size = %d ",input.coo.verti,input.coo.horiz,topsize);
 
@@ -216,6 +216,8 @@ scope locate_block(scope input){
 	if(output.search_status == 1){
 		output.row_base = input.row_base;
 	}   
-		
+	
+	output.group_addr = address;
+	printf("output.group_addr %d\n",output.group_addr);
 	return output;
 }

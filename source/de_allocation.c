@@ -67,5 +67,7 @@ void de_alloc(int saddr,int reqsize){
 
 	flag_alloc = 1;
 	
+	malloc_update(reqsize, free_req.group_addr);
+	
 	printf("deallocation finished\n\n");
 }

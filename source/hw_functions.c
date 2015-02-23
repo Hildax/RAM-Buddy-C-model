@@ -45,9 +45,9 @@ void vector_init(int length){
 void check_alvector(void){
 	int max_global_depth,max_group_depth,last_top_nodesize;
 
-	max_global_depth = log2(NUM_MBLOCK);
+	max_global_depth = log2(TOTAL_MEM_BLOCKS);
 	max_group_depth = ceil(max_global_depth/3) ;
-	last_top_nodesize = NUM_MBLOCK/pow(8,max_group_depth);
+	last_top_nodesize = TOTAL_MEM_BLOCKS/pow(8,max_group_depth);
 	printf("max depth: %d, max group depth: %d, last top node size: %d \n",max_global_depth, max_group_depth, last_top_nodesize);
 	if(last_top_nodesize == 2){
 		flag_use_alvector = 1;
