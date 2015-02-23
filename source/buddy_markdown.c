@@ -16,8 +16,7 @@ drone mark_allocation_down(drone input){
 	int n_f;
 	int shift,offset;
 	
-	printf("[Node Mark] Group (%d,%d) top node size = %d, size left to be marked = %d \n",input.coo.verti,input.coo.horiz,topsize, reqsize);
-	printf("If using allocation vector [** %d **]\n",input.alvec);
+	printf("[Node Mark] Group (%d,%d) t_size = %d, size left = %d ",input.coo.verti,input.coo.horiz,topsize, reqsize);
 	
 	//1.calculate ram address 2.read block 3.map block
 	if(input.direction == DOWN){
@@ -31,12 +30,16 @@ drone mark_allocation_down(drone input){
 		printf("group address %d \n",address);
 		
 		tree_map(mtree,bram_read(address));
-		tree_map(mtree_copy,bram_read(address));
+		if(input.request_size == input.original_reqsize){
+			tree_map(mtree_copy,bram_read(address));
+		}
 	}else{
 		address = floor(input.coo.horiz/16);
 		printf("ALLOCATION VECTOR INSTANCE %d, group-like location (%d,%d) \n",address,input.coo.verti,input.coo.horiz);
 		tree_map(mtree,vector_read(address));
-		tree_map(mtree_copy,vector_read(address));
+		if(input.request_size == input.original_reqsize){
+			tree_map(mtree_copy,vector_read(address));
+		}
 	}  
 	
 
@@ -150,6 +153,8 @@ drone mark_allocation_down(drone input){
 					}
 					update_group(held_mtree[i].group,0);	
 					bram_write(held_address[i],tree_mapback(held_mtree[i].group));
+
+					copy_mtree_direct(held_mtree[i].group,mtree);// new, de-allocation process decides about mark up after down writes
 				}			
 			}else{							
 				//end up in allocation vector
@@ -179,6 +184,8 @@ drone mark_allocation_down(drone input){
 						held_mtree[i].group[15 + held_pnode_sel[i]*2] =held_mtree[i+1].group[1] ;
 						update_group(held_mtree[i].group,1);	
 						bram_write(held_address[i],tree_mapback(held_mtree[i].group));	
+						
+						copy_mtree_direct(held_mtree[i].group,mtree);// new, de-allocation process decides about mark up after down writes
 					}	
 					
 				}else{//if reqsize originally = 1
@@ -199,9 +206,10 @@ drone mark_allocation_down(drone input){
 		}
 	}
 	
+	//update_group(mtree,input.alvec);
 	//decide about mark up
-	if(input.request_size == input.original_reqsize){
-		
+	if((input.request_size != input.original_reqsize && flag_alloc == 1) || (output.request_size == 0 && flag_alloc == 0)){
+
 		if (mtree[0] != mtree_copy[0] || mtree[1] != mtree_copy[1] || (input.original_reqsize == 1 && flag_use_alvector == 1)){
 			//printf("Downward marking finished, upward marking began.  \n");
 			//if in top group, no need to mark up

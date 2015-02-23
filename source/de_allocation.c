@@ -1,5 +1,5 @@
 // C model of a hardware RAM-based Buddy allocator
-// created by Hilda Xue, last edited on 22 Feb 2015
+// created by Hilda Xue, last edited on 23 Feb 2015
 // this file includes a function which is calls allocator functions to perform "free" 
 #include "header.h"
 

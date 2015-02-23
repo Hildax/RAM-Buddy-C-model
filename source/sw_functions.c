@@ -1,5 +1,5 @@
 // C model of a hardware RAM-based Buddy allocator
-// created by Hilda Xue, last edited 19 Feb 2015
+// created by Hilda Xue, last edited 23 Feb 2015
 // this file includes functions which help the software model
 // but not required in hardware implementation
 #include "header.h"
@@ -37,6 +37,15 @@ void copy_mtree(int *input, holder *output, int index){
 		output[index].group[i] = input[i];
 	}	
 }
+
+void copy_mtree_direct(int *input, int *output){
+	int i;
+	//printf("index is %d\n",index);
+	for(i = 0; i<32; i++){		
+		output[i] = input[i];
+	}	
+}
+
 
 //print out a tree node group from "RAM"
 void ptree(int address){

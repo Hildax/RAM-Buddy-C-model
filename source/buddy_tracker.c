@@ -1,5 +1,5 @@
 // C model of a hardware RAM-based Buddy allocator
-// created by Hilda Xue, last edited on 22 Feb 2015
+// created by Hilda Xue, last edited on 23 Feb 2015
 // tracker which helps to improve the buddy tree search efficiency
 // FIRST FIT principle
 #include "header.h"
@@ -7,7 +7,13 @@
 void malloc_update(int size, int group_addr){
 	int overlord_index = get_index(size);
 	
-	overlord[overlord_index] = group_addr;
+	if(flag_alloc == 1){
+		overlord[overlord_index] = group_addr;
+	}else{
+		if(overlord[overlord_index] > group_addr){
+			overlord[overlord_index] = group_addr;
+		}
+	}
 	//printf("overlord %d has group addr %d \n",overlord_index,group_addr);
 }
 
@@ -16,17 +22,28 @@ scope scope_gen(int size){
 	int addr;
 	
 	addr = overlord[get_index(size)];
-
-	output.request_size = size;
-	output.coo = get_coo(addr,size).coo;
+	
+	output.request_size = size;	
 	output.direction = DOWN;
-	output.pnode_sel =  output.coo.horiz % 8;
-	output.pnode_sel_phy = output.coo.horiz % 8;// important
 	output.search_status = 0;
-	output.row_base = get_coo(addr,size).row_base;
-	output.saddr = output.coo.horiz * get_coo(addr,size).topsize;
 	output.alvec = 0;
 	
+	if (size == 1){			
+		output.coo.verti = 0;
+		output.coo.horiz = 0;		
+		output.pnode_sel =  0;
+		output.pnode_sel_phy = 0;// important
+		output.row_base = 0;
+		output.saddr = 0;
+	}
+	else{
+		output.coo = get_coo(addr,size).coo;
+		output.pnode_sel =  output.coo.horiz % 8;
+		output.pnode_sel_phy = output.coo.horiz % 8;// important
+		output.row_base = get_coo(addr,size).row_base;
+		output.saddr = output.coo.horiz * get_coo(addr,size).topsize;
+	}
+
 	return output;
 	
 }
@@ -43,8 +60,8 @@ getcoo_type get_coo(int addr, int size){
 	verti = 0;
 	horiz = 0;
 	row_base = 0;
-		
-	if(addr != 0){
+	
+	if(addr != 0){  //--------------------------------- NOT ZERO!
 		// verti
 		while(size <= topsize/16){
 			verti ++;
@@ -58,8 +75,11 @@ getcoo_type get_coo(int addr, int size){
 	
 	output.coo.verti = verti;
 	output.coo.horiz = horiz;
-	output.row_base = row_base;
+	output.row_base = row_base;//of one above
 	output.topsize = topsize;
+	
+	printf("get coo output coo verti = %d,\n",output.coo.verti);
+	printf("row base %d\n",output.row_base);
 	
 	return output;
 }

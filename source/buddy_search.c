@@ -1,5 +1,5 @@
 // C model of a hardware RAM-based Buddy allocator
-// created by Hilda Xue, last edited 22 Feb 2015
+// created by Hilda Xue, last edited 23 Feb 2015
 // this file includes a function which is part of the buddy allocator 
 // locate_block function searches for the allocation address deciding group of nodes
 #include "header.h"

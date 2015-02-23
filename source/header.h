@@ -72,7 +72,7 @@ typedef struct HolderType{
 typedef struct get_coo_type{
 	coordi coo;
 	int row_base;
-		int topsize;
+	int topsize;
 }getcoo_type;
 
 word bram[TREE_RAM_LENGTH];
@@ -83,6 +83,7 @@ int flag_alloc;
 int free_vcheck;
 int held_start_verti;
 int flag_failed;
+int flag_blocking;
 
 holder held_mtree[GD];
 int held_pnode_sel[GD];
@@ -111,11 +112,14 @@ void malloc_update(int size, int group_addr);
 scope scope_gen(int size);
 getcoo_type get_coo(int addr, int size);
 int get_index(int size);
+scope check_blocking(scope input);
+scope check_blocking_prep(scope input);
 
 //sw functions
 void tree_map(int *tree_block_i,word tree_block);
 word tree_mapback(int *mtree);
 void copy_mtree(int *input, holder *output, int index);
+void copy_mtree_direct(int *input, int *output);
 void ptree(int address);
 void pvec(int address);
 void pgroup(int *input);

@@ -2,7 +2,7 @@
 C model of a hardware RAM-based Buddy allocator
 created by Hilda Xue, last edited 21 Feb 2015
 to compile:
-gcc -o main main.c hw_functions.c sw_functions.c header.h allocation.c buddy_markdown.c buddy_markup.c buddy_search.c de_allocation.c free_info.c buddy_tracker.c -lm
+gcc -o main main.c hw_functions.c sw_functions.c header.h allocation.c buddy_markdown.c buddy_markup.c buddy_search.c de_allocation.c free_info.c buddy_tracker.c safe_search.c -lm
 */
 #include "header.h"
 
@@ -61,11 +61,11 @@ saddr1 = alloc(15);
 	de_alloc(15,1);
 	saddr1 = alloc(1);
 	*/
-	
+	/*
 	for(i = 0;i <27;i++){
 		saddr1 = alloc(15);
 	}
-	
+	*/
 	/*	ptree(0);
 	ptree(1);
 	ptree(9);*/
@@ -73,37 +73,43 @@ saddr1 = alloc(15);
 	
 	
 	//pvec(0);
-	
+	/*
 	de_alloc(288,15);
 	//	pvec(0);
 	//ptree(73);
 	saddr1 = alloc(1);
 	//ptree(73);
 	saddr1 = alloc(15);
-
+*/
 	//pvec(0);
 	
 	//printf("tree depth (max) %d\n",MAX_TREE_DEPTH);
 	
-	/*
+	
 	printf("1\n");
 	saddr1 = alloc(67);
-
+	
 	printf("2\n");
-	saddr2= alloc(23);
+	saddr2= alloc(67);
+
 
 	printf("3\n");
-	saddr3 = alloc(7);
+	saddr3 = alloc(67);
 
 	printf("4\n");
-	saddr4 = alloc(2000);
-
+	saddr4 = alloc(67);
+	
 	printf("5\n");
-	de_alloc(saddr2,23);
-
+	de_alloc(saddr1,67);
+	
 	printf("6\n");
+	de_alloc(saddr2,67);
+	
+	printf("7\n");
+	saddr5 = alloc(256);
+
+	printf("8\n");
 	saddr5 = alloc(67);
-*/
 	
 	return 0;
 }
