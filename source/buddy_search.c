@@ -78,6 +78,9 @@ scope locate_block(scope input){
 				output.alvec = 1; 
 			}      
 		}else{
+			NULL;
+			//need to be verified
+			/* CAN'T HAPPEN
 			if(input.coo.verti != 0){
 				output.coo.verti = input.coo.verti - 1;
 				output.coo.horiz = floor( input.coo.horiz/8);
@@ -91,7 +94,8 @@ scope locate_block(scope input){
 			}else{
 				printf("allocation failed \n");
 				flag_failed = 1;
-			}			
+			}
+				*/
 		}
 		
 	}else {
@@ -117,7 +121,7 @@ scope locate_block(scope input){
 					i = 14;
 				}else if(input.direction == UP){
 					//not supposed to happen, but can be used for other things
-					i = input.pnode_sel*2 + 16; 
+					//i = input.pnode_sel*2 + 16; 
 				}    
 				while(flag_found == 0 && i < 30){
 					if(mtree[i] == 0){
