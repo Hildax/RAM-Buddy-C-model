@@ -26,41 +26,29 @@ int main()
 	//check if separate allocation vector is required
 	check_alvector();
 	printf("\n");
-	
-	FILE *f = fopen("test_results/test2.txt", "w");
-	if (f == NULL)
-	{
-		printf("Error opening file!\n");
-		//exit(1);
-	}
-	
-	write_sum = 0;
-	read_sum = 0;
-	
-	fprintf(f,"index size READ WRITE\n");
-	for(i = 0;i <10;i++){
-		size = 1000;
-		
-		saddr1 = alloc(size);//size
-		fprintf(f,"[%d] ",i);
-		fprintf(f,"  %d ",size);//size
-		fprintf(f,"  %d ",read_count);
-		fprintf(f,"  %d\n",write_count);
-		
-		write_sum = write_sum + write_count;
-		read_sum = read_sum + read_count;
-		
-	}
-	
-	read_avg = read_sum/i;
-	write_avg = write_sum/i;
-	fprintf(f,"===============================\n");
-	fprintf(f,"READ average  = %d\n",read_avg);
-	fprintf(f,"WRITE average = %d\n",write_avg);
-	
-	
-	
-	fclose(f);
+		printf("1\n");
+	saddr1 = alloc(67);
+
+	printf("2\n");
+	saddr2= alloc(67);
+
+	printf("3\n");
+	saddr3 = alloc(67);
+
+	printf("4\n");
+	saddr4 = alloc(67);
+
+	printf("5\n");
+	de_alloc(saddr1,67);
+
+	printf("6\n");
+	de_alloc(saddr2,67);
+
+	printf("7\n");
+	saddr5 = alloc(256);
+
+	printf("8\n");
+	saddr5 = alloc(67);
 	
 	return 0;
 }
