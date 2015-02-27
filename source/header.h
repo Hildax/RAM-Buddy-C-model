@@ -2,9 +2,9 @@
 #include <math.h>
 
 //example design parameters
-#define TOTAL_MEM_BLOCKS 128*1024*1024/16 //128MB space, 16B per location
-#define MAX_TREE_DEPTH 23
-#define TREE_RAM_LENGTH 2396745
+#define TOTAL_MEM_BLOCKS 2048//128*1024*1024/16 //128MB space, 16B per location
+#define MAX_TREE_DEPTH 11
+#define TREE_RAM_LENGTH 585//2396745
 #define ALVEC_RAM_LENGTH TOTAL_MEM_BLOCKS/32
 
 //direction
@@ -93,6 +93,8 @@ int held_pnode_sel[GD];
 int held_address[GD];
 
 int overlord[MAX_TREE_DEPTH + 1];
+
+int original_verti;
 
 //buddy allocations
 int alloc(int request_size);

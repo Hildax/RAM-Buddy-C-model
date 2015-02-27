@@ -23,7 +23,19 @@ int main()
 	bram_init(TREE_RAM_LENGTH);
 	vector_init(ALVEC_RAM_LENGTH);
 	
+	/*
+	bram_write(10,0xCCCD555);
+	bram_write(1,0x1c045);
+	bram_write(0,0x4045);
+	ptree(0);
+	ptree(1);
+	ptree(10);
+	*/
+	saddr1 = alloc(289);
+	
+	
 	//check if separate allocation vector is required
+	/*
 	check_alvector();
 	printf("\n");
 		printf("1\n");
@@ -49,6 +61,6 @@ int main()
 
 	printf("8\n");
 	saddr5 = alloc(67);
-	
+	*/
 	return 0;
 }

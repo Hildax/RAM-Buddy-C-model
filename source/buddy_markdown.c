@@ -15,6 +15,7 @@ drone mark_allocation_down(drone input){
 	int local_bit_sel;
 	int n_f;
 	int shift,offset;
+
 	
 	printf("[Node Mark] Group (%d,%d) t_size = %d, size left = %d ",input.coo.verti,input.coo.horiz,topsize, reqsize);
 	
@@ -56,6 +57,7 @@ drone mark_allocation_down(drone input){
 	if(flag_first == 1){
 		shift = input.pnode_sel * 2;
 		flag_first = 0;		
+		original_verti <= input.coo.verti;
 	}else{
 		shift = 0;		
 	}
@@ -69,10 +71,16 @@ drone mark_allocation_down(drone input){
 			mtree[(input.coo.horiz % 16)*2] = flag_alloc;
 		} 
 		output.request_size = 0;
+			
 	}else if(reqsize < topsize/8){   
 		//write bits 14 in mtree to 1,1
 		mtree[shift + 14] = flag_alloc;   
 		output.request_size = input.request_size;
+
+		if(topsize == 16){
+			
+			output.alvec = 1;
+		}
 		
 	}else if(topsize == 16){
 
@@ -87,6 +95,8 @@ drone mark_allocation_down(drone input){
 			output.alvec = 1;
 		}		
 		offset = shift/2 + n_f;
+				
+			
 	}else if(topsize == 4){		
 		n_f = reqsize;
 		for(i = shift; i < shift + 4*n_f; i ++){
@@ -103,11 +113,14 @@ drone mark_allocation_down(drone input){
 		output.request_size = reqsize - n_f * (topsize/8);
 		if(output.request_size != 0){
 			mtree[shift + 2*n_f + 14] = 1; // don't really care in case of free
+			if(topsize == 16){
+			output.alvec = 1;
+		
+			}
 		}
 		offset = shift/2 + n_f;
 	}
-	
-	
+
 	if(output.request_size != 0){
 		output.pnode_sel = offset;
 		output.coo.verti = input.coo.verti + 1;
@@ -202,7 +215,7 @@ drone mark_allocation_down(drone input){
 			} else{NULL;}
 		}
 	}
-	
+
 	//update_group(mtree,input.alvec);
 	//decide about mark up
 	if((input.request_size != input.original_reqsize && flag_alloc == 1) || (output.request_size == 0 && flag_alloc == 0)){
@@ -210,11 +223,12 @@ drone mark_allocation_down(drone input){
 		if (mtree[0] != mtree_copy[0] || mtree[1] != mtree_copy[1] || (input.original_reqsize == 1 && flag_use_alvector == 1)){
 			//printf("Downward marking finished, upward marking began.  \n");
 			//if in top group, no need to mark up
-			if(input.coo.verti == 0){
+			if(original_verti == 0){
 				output.flag_markup = 0;
 				printf("upward marking is NOT required (a)\n");
 			}else{
 				output.flag_markup = 1;
+				printf("input coo verti = %d\n",input.coo.verti);
 				printf("upward marking is required \n");
 			}
 			
@@ -245,5 +259,6 @@ drone mark_allocation_down(drone input){
 		output.node_and = input.node_and;
 	}
 	
+	printf("output.alvec = %d,\n",output.alvec);
 	return output;
 }
