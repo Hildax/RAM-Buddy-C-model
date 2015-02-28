@@ -18,7 +18,7 @@ drone mark_allocation_down(drone input){
 
 	
 	printf("[Node Mark] Group (%d,%d) t_size = %d, size left = %d ",input.coo.verti,input.coo.horiz,topsize, reqsize);
-	
+	printf("input.row_base %d \n",input.row_base);
 	//1.calculate ram address 2.read block 3.map block
 	if(input.direction == DOWN){
 		output.row_base = input.row_base + pow(2, (double)(3*(input.coo.verti-1)));
@@ -53,11 +53,12 @@ drone mark_allocation_down(drone input){
 
 	shift = 0; 
 	n_f = 0;
-	
+
 	if(flag_first == 1){
 		shift = input.pnode_sel * 2;
 		flag_first = 0;		
-		original_verti <= input.coo.verti;
+		original_verti = input.coo.verti;
+
 	}else{
 		shift = 0;		
 	}
@@ -218,10 +219,10 @@ drone mark_allocation_down(drone input){
 
 	//update_group(mtree,input.alvec);
 	//decide about mark up
-	if((input.request_size != input.original_reqsize && flag_alloc == 1) || (output.request_size == 0 && flag_alloc == 0)){
+	if((input.request_size == input.original_reqsize && flag_alloc == 1) || (output.request_size == 0 && flag_alloc == 0)){
 
 		if (mtree[0] != mtree_copy[0] || mtree[1] != mtree_copy[1] || (input.original_reqsize == 1 && flag_use_alvector == 1)){
-			//printf("Downward marking finished, upward marking began.  \n");
+			printf("Downward marking finished, upward marking began.  \n");
 			//if in top group, no need to mark up
 			if(original_verti == 0){
 				output.flag_markup = 0;
@@ -257,8 +258,9 @@ drone mark_allocation_down(drone input){
 		output.flag_markup = input.flag_markup;
 		output.node_or = input.node_or;
 		output.node_and = input.node_and;
+			
 	}
 	
-	printf("output.alvec = %d,\n",output.alvec);
+
 	return output;
 }
