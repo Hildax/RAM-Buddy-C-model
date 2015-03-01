@@ -31,7 +31,8 @@ int main()
 	ptree(1);
 	ptree(10);
 	*/
-	saddr1 = alloc(4);
+	saddr1 = alloc(137);
+	saddr2 = alloc(4);
 	
 	
 	//check if separate allocation vector is required
