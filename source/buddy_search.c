@@ -78,7 +78,10 @@ scope locate_block(scope input){
 				output.alvec = 1; 
 			}      
 		}else{
+<<<<<<< HEAD
 			NULL;
+=======
+>>>>>>> origin/master
 
 			if(input.coo.verti != 0){
 				output.coo.verti = input.coo.verti - 1;
@@ -94,7 +97,11 @@ scope locate_block(scope input){
 				printf("allocation failed \n");
 				flag_failed = 1;
 			}
+<<<<<<< HEAD
 				
+=======
+
+>>>>>>> origin/master
 		}
 		
 	}else {
