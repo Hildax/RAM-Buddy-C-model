@@ -14,7 +14,6 @@ int main()
 	int mtree[32];
 	int i,j,size;
 	int write_sum,read_sum,write_avg,read_avg;
-	
 
 	for(i= 0; i < MAX_TREE_DEPTH +1; i++){
 		overlord[i] = 0;
@@ -47,8 +46,10 @@ int main()
 		//exit(1);
 	}
 	
-	for(i = 0;i <27;i++){
-		saddr1 = alloc(15);
+	for(i = 0;i <500;i++){
+		size = i+1;
+		
+		saddr1 = alloc(size);
 		fprintf(f,"teset %d ",test_index);
 		fprintf(f," address = %d\n",saddr1);
 	}
