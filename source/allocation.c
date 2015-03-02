@@ -15,7 +15,9 @@ int alloc(int request_size){
 	drone working_drone;
 	mupdrone st_drone,mup_drone;
 	
-	printf("\nallocation request: size = %d \n",request_size);
+	test_index ++;
+	printf("\nTEST [%d]\n",test_index);
+	printf("allocation request: size = %d \n",request_size);
 	
 	read_count = 0;
 	write_count = 0;

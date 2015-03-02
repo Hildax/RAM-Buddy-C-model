@@ -14,6 +14,7 @@ int main()
 	int mtree[32];
 	int i,j,size;
 	int write_sum,read_sum,write_avg,read_avg;
+	
 
 	for(i= 0; i < MAX_TREE_DEPTH +1; i++){
 		overlord[i] = 0;
@@ -31,37 +32,29 @@ int main()
 	ptree(1);
 	ptree(10);
 	*/
-	saddr1 = alloc(137);
-	saddr2 = alloc(4);
-	
+
 	
 	//check if separate allocation vector is required
-	/*
+
 	check_alvector();
-	printf("\n");
-		printf("1\n");
-	saddr1 = alloc(67);
+	
+	test_index = 0;
+	
+	FILE *f = fopen("test.txt", "w");
+	if (f == NULL)
+	{
+		printf("Error opening file!\n");
+		//exit(1);
+	}
+	
+	for(i = 0;i <27;i++){
+		saddr1 = alloc(15);
+		fprintf(f,"teset %d ",test_index);
+		fprintf(f," address = %d\n",saddr1);
+	}
+	
 
-	printf("2\n");
-	saddr2= alloc(67);
-
-	printf("3\n");
-	saddr3 = alloc(67);
-
-	printf("4\n");
-	saddr4 = alloc(67);
-
-	printf("5\n");
-	de_alloc(saddr1,67);
-
-	printf("6\n");
-	de_alloc(saddr2,67);
-
-	printf("7\n");
-	saddr5 = alloc(256);
-
-	printf("8\n");
-	saddr5 = alloc(67);
-	*/
+	fclose(f);
+	
 	return 0;
 }

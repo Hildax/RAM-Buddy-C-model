@@ -15,6 +15,10 @@ void de_alloc(int saddr,int reqsize){
 		printf("overlord %d has group addr %d \n",i,overlord[i]);
 	}
 	*/
+	
+	test_index ++;
+	printf("\nTEST [%d]\n",test_index);
+
 	printf("deallocation request: address = %d, size = %d \n",saddr,reqsize);
 	
 	read_count = 0;

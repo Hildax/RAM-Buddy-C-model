@@ -96,6 +96,8 @@ int overlord[MAX_TREE_DEPTH + 1];
 
 int original_verti;
 
+int test_index;
+
 //buddy allocations
 int alloc(int request_size);
 void de_alloc(int saddr,int reqsize);
