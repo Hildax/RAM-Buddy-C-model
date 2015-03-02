@@ -78,9 +78,7 @@ scope locate_block(scope input){
 				output.alvec = 1; 
 			}      
 		}else{
-			NULL;
-			//need to be verified
-			/* CAN'T HAPPEN
+
 			if(input.coo.verti != 0){
 				output.coo.verti = input.coo.verti - 1;
 				output.coo.horiz = floor( input.coo.horiz/8);
@@ -95,7 +93,7 @@ scope locate_block(scope input){
 				printf("allocation failed \n");
 				flag_failed = 1;
 			}
-				*/
+
 		}
 		
 	}else {
