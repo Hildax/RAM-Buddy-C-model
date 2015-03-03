@@ -7,12 +7,12 @@
 void malloc_update(int size, int group_addr){
 	int overlord_index = get_index(size);
 	
-	if(flag_alloc == 1){
+	if(flag_alloc == 1){		
 		overlord[overlord_index] = group_addr;
-	}else{
+	}else{		
 		if(overlord[overlord_index] > group_addr){
 			overlord[overlord_index] = group_addr;
-		}
+		}		
 	}
 	//printf("overlord %d has group addr %d \n",overlord_index,group_addr);
 }
@@ -20,13 +20,20 @@ void malloc_update(int size, int group_addr){
 scope scope_gen(int size){
 	scope output;
 	int addr;
-	
+	int alvec;
+
 	addr = overlord[get_index(size)];
-	
+
 	output.request_size = size;	
 	output.direction = DOWN;
 	output.search_status = 0;
+	
 	output.alvec = 0;
+	if(addr != 0){
+		if(flag_use_alvector == 1 && size == 1){
+			output.alvec = 1;
+		}
+	}
 	
 	output.coo = get_coo(addr,size).coo;
 	output.pnode_sel =  output.coo.horiz % 8;
@@ -58,6 +65,9 @@ getcoo_type get_coo(int addr, int size){
 		}
 		correlated_row_base = row_base + pow(2,(double)(3*(verti - 1)));		
 		horiz = addr - correlated_row_base;
+
+		//horiz = addr - row_base;		
+
 	}
 	
 	output.coo.verti = verti;

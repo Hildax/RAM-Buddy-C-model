@@ -78,7 +78,14 @@ void de_alloc(int saddr,int reqsize){
 
 	flag_alloc = 1;
 	
-	malloc_update(reqsize, free_req.group_addr);
+	
+	if( flag_use_alvector == 1 && reqsize == 1){
+		malloc_update(reqsize, free_req.virtual_gaddr);
+	}else{
+		
+		malloc_update(reqsize, free_req.group_addr);
+	}
+
 	
 	printf("deallocation finished\n\n");
 }

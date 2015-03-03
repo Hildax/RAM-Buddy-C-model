@@ -86,7 +86,11 @@ int alloc(int request_size){
 		}
 		printf("allocation finished, starting address = %d \n\n",located_scope.saddr);
 	}
-	malloc_update(starting_scope.request_size, located_scope.group_addr);
+	if( flag_use_alvector == 1 && request_size == 1){
+		malloc_update(starting_scope.request_size, located_scope.virtual_gaddr);	
+	}else{
+		malloc_update(starting_scope.request_size, located_scope.group_addr);
+	}
 	
 	return located_scope.saddr;
 

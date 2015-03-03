@@ -2,9 +2,9 @@
 #include <math.h>
 
 //example design parameters
-#define TOTAL_MEM_BLOCKS 2048//128*1024*1024/16 //128MB space, 16B per location
-#define MAX_TREE_DEPTH 11
-#define TREE_RAM_LENGTH 585//2396745
+#define TOTAL_MEM_BLOCKS 1024//128*1024*1024/16 //128MB space, 16B per location
+#define MAX_TREE_DEPTH 10
+#define TREE_RAM_LENGTH 73//2396745
 #define ALVEC_RAM_LENGTH TOTAL_MEM_BLOCKS/32
 
 //direction
@@ -33,6 +33,7 @@ typedef struct BlockScope {
 	int saddr;
 	int alvec;
 	int group_addr;
+	int virtual_gaddr;
 } scope;
 
 typedef struct AllocationDrone {
@@ -63,6 +64,7 @@ typedef struct FreeInfo{
 	int row_base;	
 	int alvec;
 	int group_addr;
+	int virtual_gaddr;
 }freeprobe;
 
 typedef struct HolderType{

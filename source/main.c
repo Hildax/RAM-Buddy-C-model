@@ -39,22 +39,45 @@ int main()
 	
 	test_index = 0;
 	
-	FILE *f = fopen("test.txt", "w");
+	FILE *f = fopen("case1024_test_2.txt", "w");
 	if (f == NULL)
 	{
 		printf("Error opening file!\n");
 		//exit(1);
 	}
-	
-	for(i = 0;i <500;i++){
-		size = i+1;
-		
-		saddr1 = alloc(size);
-		fprintf(f,"teset %d ",test_index);
-		fprintf(f," address = %d\n",saddr1);
-	}
-	
 
+	saddr1= alloc(400);	
+	fprintf(f,"test %d ",test_index);
+	fprintf(f," address = %d\n",saddr1);
+	
+	saddr2= alloc(32);
+	fprintf(f,"test %d ",test_index);
+	fprintf(f," address = %d\n",saddr2);
+	
+	de_alloc(saddr1,400);	
+	fprintf(f,"test %d ",test_index);
+	fprintf(f," free\n");
+	
+	saddr3= alloc(188);
+	fprintf(f,"test %d ",test_index);
+	fprintf(f," address = %d\n",saddr3);
+
+	saddr4= alloc(1);
+	fprintf(f,"test %d ",test_index);
+	fprintf(f," address = %d\n",saddr4);
+	
+	saddr5= alloc(1);	
+	fprintf(f,"test %d ",test_index);
+	fprintf(f," address = %d\n",saddr5);
+	
+	de_alloc(saddr5,1);
+	fprintf(f,"test %d ",test_index);
+	fprintf(f," free\n");
+	
+	saddr6 = alloc(2);
+	fprintf(f,"test %d ",test_index);
+	fprintf(f," address = %d\n",saddr6);
+	
 	fclose(f);
 	
 	return 0;

@@ -31,8 +31,7 @@ freeprobe get_free_info(int saddr,int reqsize){
 	if(topsize == 2){
 		pnode_sel = saddr % 2;
 		alvec = 1;
-	}
-	if(topsize == 4){
+	}else if(topsize == 4){
 		pnode_sel = 2 * (saddr % 4);
 		alvec = 0;
 	}else{				
@@ -41,8 +40,15 @@ freeprobe get_free_info(int saddr,int reqsize){
 	}
 	
 	correlated_row_base = row_base + pow(2,(double)(3*(verti-1)));
+
+	output.virtual_gaddr = correlated_row_base + horiz;
 	
-	output.group_addr = correlated_row_base + horiz;
+	if(alvec == 0){
+		output.group_addr = correlated_row_base + horiz;
+	}else{
+		output.group_addr = horiz % 16;
+	}
+	
 	output.coo.verti = verti;
 	output.coo.horiz = horiz;
 	output.pnode_sel = pnode_sel;

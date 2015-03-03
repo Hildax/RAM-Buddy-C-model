@@ -7,7 +7,7 @@
 //search function
 scope locate_block(scope input){
 	scope output;
-	int address, alvec_address;
+	int address;
 	int mtree[32];
 	int reqsize;
 	int topsize;
@@ -16,7 +16,7 @@ scope locate_block(scope input){
 	int local_sel,local_bit_sel;  
 
 	topsize = TOTAL_MEM_BLOCKS/pow(8,input.coo.verti);
-	printf("[Search] ");
+	printf("\n[Search] ");
 	printf("In (%d,%d) t_size = %d ",input.coo.verti,input.coo.horiz,topsize);
 
 	reqsize = input.request_size;
@@ -37,7 +37,10 @@ scope locate_block(scope input){
 		tree_map(mtree,output.tree_block);  
 	}else{
 		address = floor(input.coo.horiz/16); 
+		output.virtual_gaddr = output.row_base + input.coo.horiz;
+		
 		printf("ALLOCATION VECTOR INSTANCE %d \n",address);
+		printf("Virtual Group addr = %d\n",output.virtual_gaddr );
 		output.tree_block = vector_read(address);
 		tree_map(mtree,output.tree_block);  
 	}
@@ -69,7 +72,7 @@ scope locate_block(scope input){
 				i = i+2;
 			}
 		}
-
+		
 		if(flag_found == 1){
 			output.coo.verti = input.coo.verti + 1;
 			output.coo.horiz = input.coo.horiz * 8 + output.pnode_sel;
@@ -94,7 +97,7 @@ scope locate_block(scope input){
 				printf("allocation failed \n");
 				flag_failed = 1;
 			}
-				
+			
 		}
 		
 	}else {
@@ -189,7 +192,7 @@ scope locate_block(scope input){
 			if(input.alvec == 0){
 				
 				if(topsize == 4){
-				output.saddr = input.saddr + output.pnode_sel_phy/2;
+					output.saddr = input.saddr + output.pnode_sel_phy/2;
 				}else{
 					output.saddr = input.saddr + output.pnode_sel_phy * (topsize/8);
 				}

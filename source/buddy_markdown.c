@@ -72,7 +72,7 @@ drone mark_allocation_down(drone input){
 			mtree[(input.coo.horiz % 16)*2] = flag_alloc;
 		} 
 		output.request_size = 0;
-			
+		
 	}else if(reqsize < topsize/8){   
 		//write bits 14 in mtree to 1,1
 		mtree[shift + 14] = flag_alloc;   
@@ -96,8 +96,8 @@ drone mark_allocation_down(drone input){
 			output.alvec = 1;
 		}		
 		offset = shift/2 + n_f;
-				
-			
+		
+		
 	}else if(topsize == 4){		
 		n_f = reqsize;
 		for(i = shift; i < shift + 4*n_f; i ++){
@@ -115,8 +115,8 @@ drone mark_allocation_down(drone input){
 		if(output.request_size != 0){
 			mtree[shift + 2*n_f + 14] = 1; // don't really care in case of free
 			if(topsize == 16){
-			output.alvec = 1;
-		
+				output.alvec = 1;
+				
 			}
 		}
 		offset = shift/2 + n_f;
@@ -258,9 +258,8 @@ drone mark_allocation_down(drone input){
 		output.flag_markup = input.flag_markup;
 		output.node_or = input.node_or;
 		output.node_and = input.node_and;
-			
+		
 	}
 	
-
 	return output;
 }
