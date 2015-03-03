@@ -155,6 +155,7 @@ drone mark_allocation_down(drone input){
 			if(input.alvec == 0){
 				bram_write(address,tree_mapback(mtree));
 				for(i = input.coo.verti - 1; i >= held_start_verti; i = i -1){
+
 					if(i == input.coo.verti - 1 ){
 						held_mtree[i].group[14 + held_pnode_sel[i]*2] = mtree[0];
 						held_mtree[i].group[15 + held_pnode_sel[i]*2] = mtree[1];
@@ -170,7 +171,7 @@ drone mark_allocation_down(drone input){
 			}else{							
 				//end up in allocation vector
 				vector_write(address,tree_mapback(mtree));
-				
+
 				if(mtree[(input.coo.horiz % 16)*2] == 1 || mtree[(input.coo.horiz % 16)*2 + 1] == 1){
 					output.node_or = 1;
 				}else{
@@ -186,16 +187,16 @@ drone mark_allocation_down(drone input){
 					
 					held_mtree[input.coo.verti - 1].group[14 + held_pnode_sel[input.coo.verti - 1]*2] = output.node_or; 			
 					held_mtree[input.coo.verti - 1].group[15 + held_pnode_sel[input.coo.verti - 1]*2] = output.node_and;	
-					
+
 					update_group(held_mtree[input.coo.verti - 1].group,0);	
 
 					vector_write(held_address[input.coo.verti - 1],tree_mapback(held_mtree[input.coo.verti - 1].group));	
 					for(i = input.coo.verti - 2; i >= held_start_verti; i--){
+
 						held_mtree[i].group[14 + held_pnode_sel[i]*2] =held_mtree[i+1].group[0] ;
 						held_mtree[i].group[15 + held_pnode_sel[i]*2] =held_mtree[i+1].group[1] ;
-						update_group(held_mtree[i].group,1);	
-						bram_write(held_address[i],tree_mapback(held_mtree[i].group));	
-						
+						update_group(held_mtree[i].group,0);	//set to alvec =1 by mistake
+						bram_write(held_address[i],tree_mapback(held_mtree[i].group));							
 						copy_mtree_direct(held_mtree[i].group,mtree);// new, de-allocation process decides about mark up after down writes
 					}	
 					
