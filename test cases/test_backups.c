@@ -42,7 +42,7 @@ void test1{
 }
 
 void test2{
-	FILE *f = fopen("case1024_test_2.txt", "w");
+	FILE *f = fopen("case512_test_2.txt", "w");
 	if (f == NULL)
 	{
 		printf("Error opening file!\n");
@@ -85,6 +85,14 @@ void test2{
 	
 }
 
+void test3{
+	for(i = 0;i <27;i++){
+		saddr1 = alloc(15);
+	}
+	
+	
+}
+
 void(test2){
 	
 	for(i = 0;i<20;i++){
@@ -111,18 +119,7 @@ void(test2){
 	saddr1 = alloc(1);
 }
 
-void test3{
-	for(i = 0;i <27;i++){
-		saddr1 = alloc(15);
-	}
-	
-	ptree(0);
-	ptree(1);
-	ptree(9);
-	ptree(73);
-	pvec(0);
-	
-}
+
 
 void test4{
 	

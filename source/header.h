@@ -2,9 +2,9 @@
 #include <math.h>
 
 //example design parameters
-#define TOTAL_MEM_BLOCKS 1024//128*1024*1024/16 //128MB space, 16B per location
-#define MAX_TREE_DEPTH 10
-#define TREE_RAM_LENGTH 73//2396745
+#define TOTAL_MEM_BLOCKS 8*1024*1024
+#define MAX_TREE_DEPTH 23
+#define TREE_RAM_LENGTH 2396745
 #define ALVEC_RAM_LENGTH TOTAL_MEM_BLOCKS/32
 
 //direction
@@ -123,6 +123,8 @@ getcoo_type get_coo(int addr, int size);
 int get_index(int size);
 scope check_blocking(scope input);
 scope check_blocking_prep(scope input);
+
+int sizegen(int input);
 
 //sw functions
 void tree_map(int *tree_block_i,word tree_block);
